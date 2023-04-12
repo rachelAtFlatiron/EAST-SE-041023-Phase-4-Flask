@@ -20,16 +20,18 @@
 ***
 ## 1: Intro to Flask
 ### SWBATs:
-- [ ] Explain web servers and how the web works
-- [ ] Explain the request-response cycle
+- [ ] Understand how the Internet works
+- [ ] Understand how the request-response cycle works
+- [ ] Understand HTTP protocols
 - [ ] Intialize a Flask application
 - [ ] Understand how to use SQLAlchemy within Flask
+- [ ] Use Flask routing and create views
+- [ ] Use the Flask shell 
 
 ***
 
 ## 2: REST APIs with Flask pt1
 ### SWBATs:
-- [ ] Discuss MVC architecture
 - [ ] Explain the concept of REST and RESTful naming conventions
 - [ ] Build and execute a GET and POST request
 - [ ] Use Postman to interact with Flask
@@ -48,6 +50,7 @@
 
 ## 4. Client Server Communication
 ### SWBATS:
+- [ ] Discuss MVC architecture
 - [ ] Connect a React app to a Flask API
 - [ ] Execute requests from React
 - [ ] Handle errors in React
