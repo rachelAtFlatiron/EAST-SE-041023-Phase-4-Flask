@@ -26,6 +26,25 @@ db.init_app(app)
 
 api = Api(app)
 
+# ***********************reusable get***********************
+def default_get(model):
+    try:
+        items = model.query.all()
+        items_dict = [item.to_dict() for item in items]
+        return make_response(items_dict, 200)
+    except Exception as e:
+        raise NotFound(f'{model.__name__}s was not found')
+
+# ***********************reusable show***********************
+def default_show(model, id):
+    try:
+        item = model.query.filter(
+            model.id == id).first().to_dict()
+        return make_response(item, 200)
+    except Exception as e:
+        abort(404, f'The {model.__name__} you were looking for was not found')
+
+
 # ************************reusable patch*********************
 
 
@@ -47,6 +66,7 @@ def default_patch(id, model, request):
         elif isinstance(e, ValueError):
             raise UnprocessableEntity(str(e))
 
+# ************************reusable post*********************
 
 def default_post(model, request):
     request_json = request.get_json()  # 422, 201
@@ -69,119 +89,57 @@ def default_post(model, request):
     
     return make_response(new_prod.to_dict(), 201)
 
+# ************************reusable delete*********************
+
+def default_delete(model, id):
+    row = model.query.filter(model.id == id).first()
+    if not row:
+        raise NotFound(f'the {model.__name__} requested was not found')
+    db.session.delete(row)
+    db.session.commit()
+    return make_response('', 204)
+
+
 # ***************************production: GET, POST********************
 
 class Productions(Resource):
     def get(self): #404, 200
-        # production_list = [{
-        #     "title": production.title,
-        #     "genre": production.genre,
-        #     "director": production.director,
-        #     "description": production.description,
-        #     "image": production.image,
-        #     "budget": production.title,
-        #     "ongoing": production.ongoing,
-        #     "cast_members": production.cast_members
-        # } for production in Production.query.all()]
-        try:
-            production_list = [production.to_dict()
-                               for production in Production.query.all()]
-            return make_response(production_list, 200)
-        except Exception as e:
-            raise NotFound('Productions could not be found')
-
+        res = default_get(Production)
+        return res 
+    
     def post(self):
         res = default_post(Production, request)
         return res
-    
-    def old_post(self):
-        request_json = request.get_json() #422, 201
-        # new_prod = Production(
-        #     title=request_json['title'],
-        #     genre=request_json['genre'],
-        #     length=request_json['length'],
-        #     year=request_json['year'],
-        #     image=request_json['image'],
-        #     language=request_json['language'],
-        #     director=request_json['director'],
-        #     description=request_json['description'],
-        #     composer=request_json['composer']
-        # )
-        new_prod = Production()
-        # need this to raise integrity errors
-        try:
-            for attr in request_json:
-                
-                setattr(new_prod, attr, request_json[attr])
-                import ipdb; ipdb.set_trace()
-                request.path, request.host, request.get_json()
-            db.session.add(new_prod)
-            db.session.commit()
-        except Exception as e:
-            
-            raise UnprocessableEntity(str(e))
-
-        return make_response(
-            new_prod.to_dict(),
-            201
-        )
 
 
 api.add_resource(Productions, '/productions')
 
 # ************************production: SHOW, PATCH, DELETE********************
-
-
-    
 class ProductionById(Resource):
     def get(self, id): #404, 200
-        try:
-            prod = Production.query.filter(
-                Production.id == id).first().to_dict()
-            return make_response(prod, 200)
-        except Exception as e:
-            abort(404, 'The production you were looking for was not found')
+        res = default_show(Production, id)
+        return res
 
     def patch(self, id): #422, 200, 404
         res = default_patch(id, Production, request)
         return res
 
     def delete(self, id): #204, 404
-        prod = Production.query.filter_by(id=id).first()
-        if not prod:
-            raise NotFound('production was not found')
-        db.session.delete(prod)
-        db.session.commit()
-        return make_response('', 204)
+        res = default_delete(Production, id)
+        return res
 
 
 api.add_resource(ProductionById, '/productions/<int:id>')
 
 # ********************actor: GET, POST***********************
-
-
 class Actors(Resource):
     def get(self): #404, 200
-        actors = Actor.query.all()
-        if not actors:
-            raise NotFound('actors not found')
-        actors_dict = [actor.to_dict() for actor in actors]
-        return make_response(actors_dict, 200)
+        res = default_get(Actor)
+        return res 
  
     def post(self): #422, 201
-        try:
-            req_json = request.get_json()
-            new_actor = Actor(
-                name=req_json["name"],
-                image=req_json["image"],
-                age=req_json["age"],
-                country=req_json["country"]
-            )
-            db.session.add(new_actor)
-            db.session.commit()
-            return make_response(new_actor.to_dict(), 201)
-        except Exception as e:
-            raise UnprocessableEntity(str(e))
+        res = default_post(Actor, request)
+        return res 
 
 
 api.add_resource(Actors, '/actors')
@@ -191,10 +149,8 @@ api.add_resource(Actors, '/actors')
 
 class ActorById(Resource):
     def get(self, id): #404, 200
-        actor = Actor.query.filter(Actor.id == id).first()
-        if not actor:
-            raise NotFound('actor not found')
-        return make_response(actor.to_dict(), 200)
+        res = default_show(Actor, id)
+        return res
 
 
     def patch(self, id): #201, 404, 422
@@ -202,12 +158,8 @@ class ActorById(Resource):
         return res
 
     def delete(self, id): #404, 204
-        actor = Actor.query.filter(Actor.id == id).first()
-        if not actor:
-            raise NotFound('actor not found')
-        db.session.delete(actor)
-        db.session.commit()
-        return make_response('', 204)
+        res = default_delete(Actor, id)
+        return res
 
 
 api.add_resource(ActorById, '/actors/<int:id>')
@@ -217,27 +169,12 @@ api.add_resource(ActorById, '/actors/<int:id>')
 
 class Roles(Resource):
     def get(self): #404, 200
-
-        roles = Role.query.all()
-        if not roles:
-            abort(404, 'roles not found')
-        role_dict = [role.to_dict() for role in roles]
-        return make_response(role_dict, 200)
+        res = default_get(Role)
+        return res
 
     def post(self): #201, 422
-        try:
-            req_json = request.get_json()
-            new_role = Role(
-                role_name=req_json['role_name'],
-                production_id=req_json['production_id'],
-                actor_id=req_json['actor_id']
-            )
-            db.session.add(new_role)
-            db.session.commit()
-
-            return make_response(new_role.to_dict(), 201)
-        except Exception as e:
-            abort(422, str(e))
+        res = default_post(Roles, request)
+        return res
 
 
 api.add_resource(Roles, '/roles')
@@ -247,23 +184,16 @@ api.add_resource(Roles, '/roles')
 
 class RoleById(Resource):
     def get(self, id): #404, 200
-        role = Role.query.filter(Role.id == id).first()
-        if not role:
-            abort(404, 'role not found')
-        return make_response(role.to_dict(), 200)
+        res = default_show(Role, id)
+        return res
 
     def patch(self, id): #404, 201, 422
         res = default_patch(id, Actor, request)
         return res
 
     def delete(self, id): #404, 204
-        role = Role.query.filter(Role.id == id).first()
-        if not role:
-            abort(404, 'role not found')
-        db.session.delete(role)
-        db.session.commit()
-
-        return make_response('', 204)
+        res = default_delete(Role, id)
+        return res
 
 
 api.add_resource(RoleById, '/roles/<int:id>')
