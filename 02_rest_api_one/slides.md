@@ -20,6 +20,17 @@ title: '02_rest_api_one'
 ## Flask-RESTful
 
 - an extension for Flask that adds support for building APIs
+- `json-server` was a fake RESTful server
+
+| HTTP Verb 	|       Path       	| Description        	|
+|-----------	|:----------------:	|--------------------	|
+| GET       	|   /productions   	| READ all resources 	|
+| GET       	| /productions/:id 	| READ one resource   	|
+| POST      	|   /productions   	| CREATE one resource 	|
+| PATCH/PUT 	| /productions/:id 	| UPDATE one resource	|
+| DELETE    	| /productions/:id 	| DESTROY one resource 	|
+
+- we use the RESTful methodology so that there is a standard 
 
 ---
 
@@ -42,7 +53,12 @@ api.add_resource(CLASSNAME, '/endpoint')
 
 ## Using Flask RESTful
 
+- we don't need @app.route decorator
+- instead we create a method that represents each route method (GET, POST, etc.)
+
+
 ```js
+from flask_restful import Api, Resource
 
 class MyModel(Resource):
     def get(self):
@@ -51,9 +67,20 @@ class MyModel(Resource):
     def post(self):
         print('save a record')
 
+//this is how we tell the class what path to use
 api.add_resource(MyModel, '/my-model')
 
 ```
+
+- what is Resource?  Api?
+
+---
+
+## Why flask-restful instead of the native way?
+
+- You may write routes not included with RESTful routing such as login, alerts, checks and balances, etc.
+
+- If so you will have to use the native way
 
 ---
 
@@ -84,21 +111,25 @@ api.add_resource(MyModel, '/my-model')
 
 - `json.loads()` converts a JSON string in Python object/dictionary
 
----
-
-
-## Creating JSON responses
-
-`json.dumps()` vs `jsonify()` vs `to_dict()`
-- `json.dumps()` does not automatically add an application/json header
-- `jsonify()` will add the header for you
-- `to_dict()` is enabled by flask-serialize
 
 ---
 
-## flask-serialize
+## TypeError: Object of type <Model> is not JSON serializable
+
+- If you try to use `jsonify()` or `json.dumps()` on some query you may get this error.
+
+- To solve it you will have to create a `def serialize()` method in your model to express how to serialize the object.  Such that you will then call
+
+`jsonify(result.serializer())`
+
+- But you can skip all that by using...
+
+---
+
+## sqlalchemy-serialize
 
 - Allows you to write rules on what fields to include in your response
+- Especially helpful when you need to make use of relationships
 
 ```js
 from sqlalchemy_serializer import SerializerMixin
@@ -108,6 +139,17 @@ class SomeModel(db.Model, SerializerMixin)
 ```
 
 - An easy way to serialize JSON for GET from db and for PUT/POST/PATCH/etc. from client.
+
+
+---
+
+
+## Creating JSON responses
+
+`json.dumps()` vs `jsonify()` vs `to_dict()`
+- `json.dumps()` does not automatically add an application/json header, and you need to provide how to serialize 
+- `jsonify()` will add the header for you, and you need to provide how to serialize
+- `to_dict()` is enabled by flask-serialize
 
 ---
 
@@ -184,4 +226,3 @@ serialize_rules = ('-field_one', '-field_two')
 }
 
 ```
-

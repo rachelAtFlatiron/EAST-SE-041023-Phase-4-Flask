@@ -189,6 +189,17 @@ Response syntax
 
 ---
 
+## Why Flask
+- built in debugger
+- easily scalable
+- secure cookies
+- unit testing support
+- easy to learn, straightforward
+- lots of extensions
+- small codebase - lots of control for developers
+
+---
+
 ## Initializing a Flask App
 
 ```js
