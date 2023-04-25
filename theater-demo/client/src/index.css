@@ -1,0 +1,439 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+/*
+font-family: 'Jost', sans-serif;
+font-family: 'Libre Baskerville', serif;
+*/
+:root {
+  --turquoise: #00efe1;
+  --mid-turquoise: #14d5c9;
+  --dark-turquoise: #00333f;
+  --black: #030416;
+  --white: #f1f1f1;
+  --grey: #d6e2e7;
+  --dark-grey: #7f8a8e;
+  --oscars-grey: rgb(105, 105, 105);
+  --light-grey: rgb(150, 150, 150);
+  --gold: rgb(199, 159, 39);
+  --light-gold: rgba(185, 158, 94, .4);
+  --yellow: #f9c51a;
+  --orange: #ff5c00;
+  --fuschia: #e80352;
+  --blue: #338fff;
+  --blue-dark: #145cb3;
+  --purple: #cda2ff;
+  --green: #00ef7c;
+  --color: var(--white);
+  --background: var(--black);
+  --primary: var(--gold);
+}
+
+#root {
+  background-color: var(--gold)
+}
+
+/* layout */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 16px;
+  color: var(--oscars-grey);
+  background-color: var(--white);
+}
+
+.App {
+  color: var(--oscars-grey);
+  background-color: var(--white);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+.App.light {
+  --color: var(--oscars-grey);
+  --background: var(--white);
+  --primary: var(--gold);
+  margin: 0 200px;
+}
+
+section {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* buttons */
+button,
+.button {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  font: inherit;
+  font-weight: 300;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  background-color: var(--background);
+  transition: background-color 0.2s;
+}
+
+button.active,
+button:focus,
+button:hover,
+.button:hover {
+  outline: none;
+  color: var(--white);
+  background-color: var(--gold);
+  /* border: 2px solid var(--primary); */
+}
+
+button:disabled {
+  cursor: not-allowed;
+  color: var(--dark-grey);
+  background-color: var(--grey);
+}
+
+button.blue {
+  border: 2px solid var(--blue-dark);
+  color: var(--blue);
+}
+
+button.blue.active,
+button.blue:focus,
+button.blue:hover {
+  color: var(--white);
+  background-color: var(--blue);
+  border: 2px solid var(--blue);
+}
+
+/* links */
+a {
+  color: var(--color);
+  border-bottom: 1px solid var(--color);
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+a:hover {
+  background-color: var(--gold);
+  border-bottom: 1px solid var(--gold);
+  color: var(--white)
+}
+
+/* header */
+header {
+  padding: 1rem;
+  align-content: center;
+  font-family: 'Jost', sans-serif;
+
+}
+
+header h1 {
+  width: 100%;
+  text-align: center;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+
+}
+
+header h1 a {
+  border-bottom: none;
+  color: var(--gold);
+}
+
+header h1 a:hover {
+  background-color: none;
+}
+
+header .menu {
+  display: flex;
+  justify-content: space-around;
+  border-top: solid 1px var(--light-grey);
+  border-bottom: solid 1px var(--light-grey);
+}
+
+header .menu a {
+  color: var(--oscars-grey);
+  font-weight: 600;
+}
+
+header .menu a:hover {
+  border: none;
+}
+
+header h1 span {
+  color: var(--gold)
+}
+
+header .button.active {
+  background-color: var(--dark-turquoise);
+  color: var(--white)
+}
+
+.logo {
+  color: var(--gold);
+  font-size: 1.25em;
+  font-family: Helvetica;
+  margin-right: 0.5rem;
+}
+
+/* forms */
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
+  border: 1px solid var(--oscars-grey);
+  padding: 1.75rem;
+  box-shadow: 1px 3px 5px;
+}
+
+.form h3 {
+  margin-bottom: 1rem;
+  color: red;
+}
+
+.form label {
+  color: black;
+  font-family: 'Jost', sans-serif;
+  margin-top: 12px;
+}
+
+input,
+textarea,
+select {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  padding: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: 'Jost', serif;
+  transition: all 0.3s;
+  border: 2px solid var(--light-gold);
+  border-radius: 5px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border: 2px solid var(--gold);
+}
+
+.form input[type="submit"] {
+  width: 100%;
+  cursor: pointer;
+  border: solid 2px var(--light-gold);
+  margin-top: 25px;
+}
+
+.form h3 {
+  font-weight: 300;
+  font-size: 12px;
+}
+
+/* Filter */
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.filter button {
+  margin: 0 1rem;
+}
+
+/* cards */
+.cards {
+  margin: 0 auto;
+  list-style: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  /* max-width: 248px; */
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border: 1px solid var(--light-grey);
+  box-shadow: 1px 3px 5px;
+}
+
+@media screen and (max-width: 1248px) {
+  .App.light {
+    margin: 0;
+  }
+
+  .card {
+    display: block;
+    max-width: inherit;
+  }
+}
+
+/* movie posters have aspect 2:3*/
+.card .image {
+
+  overflow: hidden;
+  position: relative;
+}
+
+.card .image img {
+  width: 100%;
+  object-fit: cover;
+  height: 515px;
+}
+
+.card .image .claps {
+  color: transparent;
+  text-shadow: 0 0 0 var(--turquoise);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.card .image .claps:focus,
+.card .image .claps:hover {
+  color: transparent;
+  text-shadow: 0 0 0 var(--color);
+}
+
+.card .details {
+  margin: 0.5rem;
+}
+
+.card .details h2 {
+  font-family: 'Jost', sans-serif;
+  font-size: 26px;
+  font-weight: 200;
+  padding-bottom: 16px;
+  text-transform: capitalize;
+}
+
+.card .details a {
+  border-color: var(--gold)
+}
+
+.card .details h4 {
+  margin: 0.5rem 0;
+}
+
+.card .details p {
+  margin: 0.5rem 0;
+  text-align: center;
+  font-style: italic;
+  padding-top: 24px;
+}
+
+
+.project-detail .details .crew {
+  list-style: none;
+}
+
+.project-detail .details .crew li {
+  display: flex;
+  
+  margin-bottom: 20px;
+}
+
+.project-detail .details .crew li .crew-member {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+.project-detail .details .crew li img {
+  margin-right: 20px;
+}
+
+.project-detail .details .crew li .crew-member p {
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.card .extra {
+  margin-top: auto;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin: 0.25rem;
+}
+
+.badge.blue {
+  background-color: var(--blue);
+  border: 2px solid var(--blue-dark);
+  color: var(--white);
+}
+
+.project-detail {
+  margin: 16px auto 0 auto;
+}
+
+.project-detail h1 {
+  text-align: center;
+  font-family: 'Jost', sans-serif;
+  text-transform: capitalize;
+  color: var(--gold)
+}
+
+.project-detail > p {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 50px;
+}
+
+.project-detail {
+  height: auto;
+  max-height: none;
+}
+
+.project-detail .image {
+  float: left;
+  overflow: unset;
+}
+
+.project-detail .image img {
+  border: solid 1px var(--oscars-grey);
+  box-shadow: 1px 3px 5px;
+  max-width: 420px;
+}
+
+.project-detail .project-card {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.project-detail .project-card .details * {
+  text-align: left;
+}
+
+.project-detail .project-card .details h3+p {
+  margin-bottom: 20px;
+}
+
+.project-detail .project-card .details h3 {
+  text-decoration: underline
+}
+
+.project-detail .extra {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 50px;
+}
