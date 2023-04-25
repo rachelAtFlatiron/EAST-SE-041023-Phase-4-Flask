@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from models import db, Production
 
+
 #so that flask application can see all files/folders
 #pass in __name__ to look in current module section
 app = Flask(__name__)
@@ -44,6 +45,7 @@ def index():
 def image():
     return '<img src="https://hips.hearstapps.com/hmg-prod/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=1.00xw:0.756xh;0,0.0756xh&resize=1200:*" />'
 
+
 @app.route('/productions/<string:title>')
 def production(title):
     #c for continue
@@ -67,5 +69,7 @@ def production(title):
     #request.path => /context
 
 
-
+# To run the file as a script
+# if __name__ == '__main__':
+#     app.run(port=5000, debug=True)
 
