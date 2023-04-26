@@ -5,33 +5,13 @@ from models import db, Production
 #Production GET POST
 class Productions(Resource):
     def get(self):
-        # production_list = [{
-        #     "title": production.title,
-        #     "genre": production.genre,
-        #     "director": production.director,
-        #     "description": production.description,
-        #     "image": production.image,
-        #     "budget": production.title,
-        #     "ongoing": production.ongoing,
-        #     "cast_members": production.cast_members
-        # } for production in Production.query.all()]
 
         production_list = [production.to_dict() for production in Production.query.all()]
         return make_response(production_list, 200)
     
     def post(self):
         request_json = request.get_json()
-        # new_prod = Production(
-        #     title=request_json['title'],
-        #     genre=request_json['genre'],
-        #     length=request_json['length'],
-        #     year=request_json['year'],
-        #     image=request_json['image'],
-        #     language=request_json['language'],
-        #     director=request_json['director'],
-        #     description=request_json['description'],
-        #     composer=request_json['composer']             
-        # )
+
         new_prod = Production()
         #need this to raise integrity errors
         for attr in request_json:

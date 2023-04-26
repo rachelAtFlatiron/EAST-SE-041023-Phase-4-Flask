@@ -1,9 +1,8 @@
 import { useFormik } from "formik";
+import { redirect } from "react-router-dom";
 import * as yup from "yup";
-import { useHistory } from "react-router-dom";
 
 function ActorForm() {
-	const history = useHistory();
 
 	const schema = yup.object().shape({
 		name: yup.string().required("required"),
@@ -21,6 +20,7 @@ function ActorForm() {
 		},
 		validationSchema: schema,
 		onSubmit: (values) => {
+
 			console.log(values);
 			fetch("/actors", {
 				method: "POST",
@@ -32,15 +32,17 @@ function ActorForm() {
 				if (res.ok) {
 					res.json().then((actor) => {
 						console.log(actor);
-						history.push(`/actors/${actor.id}`);
+						redirect(`/actors/${actor.id}`);
 					});
+				} else {
+					res.json().then(err => console.log("oops"))
 				}
 			});
 		},
 	});
 	return (
 		<section>
-			<form className="form">
+			<form onSubmit={formik.handleSubmit} className="form">
 				<label>Full Name </label>
 
 				<input

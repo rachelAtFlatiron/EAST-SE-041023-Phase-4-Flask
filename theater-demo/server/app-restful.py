@@ -26,6 +26,19 @@ db.init_app(app)
 
 api = Api(app)
 
+#********************custom routes*******************
+@app.route('/longest-movies')
+def get_longest_movies():
+    prods = Production.query.order_by(Production.length.desc()).limit(5)
+    prods_list = [prod.to_dict() for prod in prods]
+    return make_response(prods_list, 200)
+
+@app.route('/most-popular-actors')
+def most_popular_actors():
+    #for each actor
+    #sum number of roles
+    pass 
+
 # ***********************reusable get***********************
 def default_get(model):
     try:

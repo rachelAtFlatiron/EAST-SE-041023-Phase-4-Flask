@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Navigation() {
 	return (
@@ -10,18 +10,18 @@ function Navigation() {
 			</h1>
 
 			<div className="menu">
-				<Link className="button" to="/">
+				<NavLink className="button" to="/productions" end>
 					All Productions
-				</Link>
-				<Link className="button" to={"/actors"}>
+				</NavLink>
+				<NavLink className="button" to="/actors" end>
 					All Actors
-				</Link>
-				<Link className="button" to={"/actors/new"}>
+				</NavLink>
+				<NavLink className="button" to="/actors/new">
 					New Actor
-				</Link>
-				<Link className="button" to="/productions/new">
+				</NavLink>
+				<NavLink className="button" to="/productions/new">
 					New Production
-				</Link>
+				</NavLink>
 			</div>
 		</header>
 	);

@@ -1,10 +1,9 @@
-import { useHistory } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 function ProductionForm() {
-	const history = useHistory();
 
 	const schema = yup.object().shape({
 		title: yup.string().required("required"),
@@ -17,18 +16,6 @@ function ProductionForm() {
 		description: yup.string().max(250, "too long"),
 		composer: yup.string(),
 	});
-
-	// const initialValues = {
-	// 	title: '',
-	// 	genre: '',
-	// 	length: 0,
-	// 	year: 0,
-	// 	image: '',
-	// 	language: '',
-	// 	director: '',
-	// 	description: '',
-	// 	composer: ''
-	// }
 
 	const formik = useFormik({
 		initialValues: {
@@ -55,7 +42,7 @@ function ProductionForm() {
 				if (res.ok) {
 					res.json().then((production) => {
 						console.log(production);
-						history.push(`/productions/${production.id}`);
+						redirect(`/productions/${production.id}`);
 					});
 				} else {
 					res.json().then((err) => console.log("oops"));

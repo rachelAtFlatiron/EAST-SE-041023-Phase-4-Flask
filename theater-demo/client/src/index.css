@@ -169,6 +169,9 @@ header .menu a:hover {
   border: none;
 }
 
+header .menu a.active {
+  background-color: var(--gold);
+}
 header h1 span {
   color: var(--gold)
 }
@@ -293,6 +296,7 @@ select:focus {
   width: 100%;
   object-fit: cover;
   height: 515px;
+  max-height: 515px;
 }
 
 .card .image .claps {
@@ -420,7 +424,7 @@ select:focus {
 }
 
 .project-detail .project-card .details * {
-  text-align: left;
+  text-align: left !important;
 }
 
 .project-detail .project-card .details h3+p {

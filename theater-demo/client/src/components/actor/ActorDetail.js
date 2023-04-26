@@ -1,4 +1,4 @@
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, redirect, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function ProductionDetail() {
@@ -8,7 +8,6 @@ function ProductionDetail() {
 	const [error, setError] = useState(null);
 
 	const params = useParams();
-	const history = useHistory();
 
 	useEffect(() => {
 		fetch(`/actors/${params.id}`).then((res) => {
@@ -30,8 +29,6 @@ function ProductionDetail() {
 					<img width={"300px"} src={image} alt={name} />
 				</figure>
 				<section className="details">
-					<p>Age: {age}</p>
-					<p>Country: {country}</p>
 					<h3 style={{ margin: "16px auto" }}>Productions: </h3>
 					<ul className="crew">
 						{actor.roles.map((role) => (

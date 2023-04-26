@@ -1,4 +1,4 @@
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function ProductionDetail() {
@@ -8,7 +8,6 @@ function ProductionDetail() {
 	const [error, setError] = useState(null);
 
 	const params = useParams();
-	const history = useHistory();
 
 	useEffect(() => {
 		fetch(`/productions/${params.id}`).then((res) => {
@@ -20,9 +19,10 @@ function ProductionDetail() {
 		});
 	}, []);
 
-	const { id, title, genre, image, description, director, length, composer } =
-		production;
+	const { id, title, genre, image, description, director, length, composer } = production;
+
 	if (error) return <h2>{error}</h2>;
+	
 	return (
 		<div className="project-detail" id={id}>
 			<h1>{title}</h1>
@@ -31,14 +31,15 @@ function ProductionDetail() {
 			<div className="project-card">
 				<figure className="image">
 					<img src={image} alt={title} />
-				</figure>
-				<section className="details">
-					<div>
+					<section>
 						<p>Genre: {genre}</p>
 						<p>Director: {director}</p>
 						<p>Composer: {composer}</p>
 						<p>Length: {length}</p>
-					</div>
+					</section>
+				</figure>
+				<section className="details">
+					
 					<h3 style={{ margin: "16px auto" }}>Cast: </h3>
 					<ul className="crew">
 						{production.roles.map((crew) => (
@@ -54,7 +55,6 @@ function ProductionDetail() {
 										<p style={{ "font-style": "italic" }}>{crew.actor.name}</p>
 									</Link>
 									<p>{crew.role_name}</p>
-
 								</div>
 							</li>
 						))}
