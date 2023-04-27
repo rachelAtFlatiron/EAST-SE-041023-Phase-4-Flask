@@ -124,6 +124,19 @@ class Role(db.Model, SerializerMixin):
         return f"<Role id={self.id}, role_name={self.role_name}, actor_id={self.actor_id}, production_id={self.production_id}/>"
 
 
+class User(db.Model, SerializerMixin):
+    __tablename__ = "users" 
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    username = db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        return f"<User id={self.id} username={self.username} password={self.password} />"
+
+
 def not_empty_string(self, key, value):
     if(value == ''):
         raise ValueError(f'{key} cannot be empty')

@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError, DBAPIError
 
 from flask_restful import Api, Resource
 
-from models import db, Production, Role, Actor
+from models import db, Production, Role, Actor, User
 
 # TODO: UPDATE ERRORS TO REFLECT UNAUTHORIZED
 # TODO: Up next: ERRORS IN default_post
@@ -210,6 +210,36 @@ class RoleById(Resource):
 
 
 api.add_resource(RoleById, '/roles/<int:id>')
+
+# **********************users: GET, POST************************
+class Users(Resource):
+    def get(self):
+        res = default_get(User)
+        return res 
+    
+    def post(self):
+        res = default_post(User, request)
+        return res 
+    
+api.add_resource(Users, '/users')
+
+# **********************users: SHOW, PATCH, DELETE************************
+class UserById(Resource):
+    def get(self, id):
+        res = default_show(User, id)
+        return res 
+    
+    def patch(self, id):
+        res = default_patch(id, User, request)
+        return res
+    
+    def delete(self, id):
+        res = default_delete(User, id)
+        return res 
+    
+api.add_resource(UserById, '/users/<int:id>')
+
+# **********************LOGIN************************
 
 # ******************************errors********************************
 # generic errors that will be falled back to

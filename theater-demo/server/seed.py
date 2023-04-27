@@ -1,27 +1,29 @@
 from app import app
-from models import db, Production, Role, Actor
+from models import db, Production, Role, Actor, User
 from faker import Faker
 
-#application context - gives us access to context and data within the application we are working on as it is running 
-#need to use with_context to use seeds 
+# application context - gives us access to context and data within the application we are working on as it is running
+# need to use with_context to use seeds
 
 with app.app_context():
     Production.query.delete()
     Role.query.delete()
     Actor.query.delete()
 
-    #prod = Production(title='', genre='', length='', image='', language='', director='', description='')
-    menu = Production(title='the menu', 
-                      genre='thriller', 
-                      length=107, 
-                      image='https://m.media-amazon.com/images/M/MV5BMzdjNjI5MmYtODhiNS00NTcyLWEzZmUtYzVmODM5YzExNDE3XkEyXkFqcGdeQXVyMTAyMjQ3NzQ1._V1_FMjpg_UX1000_.jpg', 
-                      language='english', 
-                      director='mark mylod', 
-                      description='Painstakingly prepared.  Brilliantly executed.', 
+    # ~~~~~~~~~~~~~~~~~~~PRODUCTIONS~~~~~~~~~~~~~~~~``
+
+    # prod = Production(title='', genre='', length='', image='', language='', director='', description='')
+    menu = Production(title='the menu',
+                      genre='thriller',
+                      length=107,
+                      image='https://m.media-amazon.com/images/M/MV5BMzdjNjI5MmYtODhiNS00NTcyLWEzZmUtYzVmODM5YzExNDE3XkEyXkFqcGdeQXVyMTAyMjQ3NzQ1._V1_FMjpg_UX1000_.jpg',
+                      language='english',
+                      director='mark mylod',
+                      description='Painstakingly prepared.  Brilliantly executed.',
                       composer='colin stetson',
                       year=2022
                       )
-    
+
     everything = Production(
         title="everything everywhere all at once",
         genre='sci-fi',
@@ -95,7 +97,7 @@ with app.app_context():
         description="let the love, murder, and conspiracy begin"
     )
 
-    nope = Production (
+    nope = Production(
         title='nope',
         genre='sci-fi',
         image='https://m.media-amazon.com/images/M/MV5BOGJhYzAwN2MtNjA1Ny00ZjJiLWFmNzYtMDgzNTUzYjc5NTIzXkEyXkFqcGdeQXVyMTUzOTcyODA5._V1_.jpg',
@@ -129,11 +131,25 @@ with app.app_context():
         language='english'
     )
 
-    productions=[knives, timeToDie, nope, amsterdam, shark, wicked,ind, budapest, guardians,everything, menu]
+    gucci = Production (
+        title = "House of Gucci",
+        genre = "Drama",
+        director = "Ridley Scott",
+        composer = "Harry Gregoson-Williams",
+        length = 158,
+        image = "https =//m.media-amazon.com/images/M/MV5BZThjMTA5YjgtZmViZi00YjY0LTk5MzQtMjUwMGEzZGVlYzFjXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg",
+        description = "A legacy worth killing for. A name to die for.",
+        language = "English",
+        year = 2021
+    )
+
+    productions = [gucci, knives, timeToDie, nope, amsterdam,
+                   shark, wicked, ind, budapest, guardians, everything, menu]
     db.session.add_all(productions)
     db.session.commit()
 
-    #actor = Actor(name='', image='', age=-1, country='')
+    # ~~~~~~~~~~~~~~~~~~~~~ACTORS~~~~~~~~~~~~~~~~~~~
+    # actor = Actor(name='', image='', age=-1, country='')
     anya = Actor(
         name='anya taylor-joy',
         age=27,
@@ -182,7 +198,7 @@ with app.app_context():
         country='england',
         image='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Daniel_Kaluuya_%2835411578144%29_%28cropped_2%29.jpg/440px-Daniel_Kaluuya_%2835411578144%29_%28cropped_2%29.jpg'
     )
-    yeun=Actor(
+    yeun = Actor(
         name='steven yeun',
         age=39,
         country='korea',
@@ -207,14 +223,28 @@ with app.app_context():
         country='usa',
         image='https://cdn.britannica.com/72/238172-050-05FB9A3C/American-actress-Jamie-Lee-Curtis-2021.jpg'
     )
+    driver = Actor(
+        name= "Adam Driver",
+        image= "https://m.media-amazon.com/images/M/MV5BYThiYmU0ODAtNjZkMC00OTBiLWE5NzgtMDY3YjMwYTg5NWJjXkEyXkFqcGdeQXVyMTUwOTY2MDYx._V1_.jpg",
+        age= 39,
+        country= "USA"
+    )
+    gaga = Actor(
+        name = "lady gaga",
+        image = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Lady_Gaga_at_Joe_Biden%27s_inauguration_%28cropped_5%29.jpg/220px-Lady_Gaga_at_Joe_Biden%27s_inauguration_%28cropped_5%29.jpg",
+        age = 37,
+        country = "usa"
+    )
 
-    actors=[curtis, armas, keke, yeun, kaluuya, deniro, smith, saldana, goldblum, yeoh,fiennes, anya]
+    actors = [gaga, driver, curtis, armas, keke, yeun, kaluuya,
+              deniro, smith, saldana, goldblum, yeoh, fiennes, anya]
     db.session.add_all(actors)
     db.session.commit()
 
-    #role = Role(role_name='', production_id=-1, actor_id=-1)
+    # ~~~~~~~~~~~~~~~~~~~~~~~~ROLES~~~~~~~~~~~~~~~~~~~~~~
+    # role = Role(role_name='', production_id=-1, actor_id=-1)
     margot = Role(
-        role_name='Margot', 
+        role_name='Margot',
         actor=anya,
         production=menu
     )
@@ -228,42 +258,42 @@ with app.app_context():
         actor=yeoh,
         production=everything
     )
-    monsieur=Role(
+    monsieur = Role(
         role_name='Monsieur Gustave H.',
         actor=fiennes,
         production=budapest
     )
-    deputy=Role(
+    deputy = Role(
         role_name="Deputy Vilmos Kovacs",
         actor=goldblum,
         production=budapest
     )
-    aleta=Role(
+    aleta = Role(
         role_name='Aleta Ogord',
         actor=yeoh,
         production=guardians
     )
-    gamora=Role(
+    gamora = Role(
         role_name='gamora',
         actor=saldana,
         production=guardians
     )
-    levinson=Role(
+    levinson = Role(
         role_name='David Levinson',
         actor=goldblum,
         production=ind
     )
-    captain=Role(
+    captain = Role(
         role_name='Captain Steven Hiller',
         actor=smith,
         production=ind
     )
-    wizard=Role(
+    wizard = Role(
         role_name="The Wonderful Wizard of Oz",
         actor=goldblum,
         production=wicked
     )
-    morrible=Role(
+    morrible = Role(
         role_name="Madame Morrible",
         actor=yeoh,
         production=wicked
@@ -298,7 +328,7 @@ with app.app_context():
         actor=kaluuya,
         production=nope
     )
-    jupe=Role(
+    jupe = Role(
         role_name="Ricky Jupe Park",
         actor=yeun,
         production=nope
@@ -333,7 +363,28 @@ with app.app_context():
         actor=curtis,
         production=everything
     )
+    maurizio = Role(
+        role_name= "Maurizio Gucci",
+        production= gucci,
+        actor= driver
+    )
+    patrizia = Role(
+        role_name= "patrizia",
+        production = gucci,
+        actor = gaga
+    )
 
-    roles = [deidre, drysdale, marta, mallory, paloma, em, jupe, oj, gilbert, irma, libby, don, oscar, morrible, wizard, captain, levinson, gamora, aleta, deputy, monsieur, evelyn, chef, margot]
+    roles = [patrizia, maurizio, deidre, drysdale, marta, mallory, paloma, em, jupe, oj, gilbert, irma, libby,
+            don, oscar, morrible, wizard, captain, levinson, gamora, aleta, deputy, monsieur, evelyn, chef, margot]
     db.session.add_all(roles)
+    db.session.commit()
+
+
+    #~~~~~~~~~~~~~~~~~~~USERS~~~~~~~~~~~~~~~~~~~~
+    a = User(username="user_one", password="user_one")
+    b = User(username="user_two", password="user_two")
+    c = User(username="user_three", password="user_three")
+
+    users = [a, b, c]
+    db.session.add_all(users)
     db.session.commit()
