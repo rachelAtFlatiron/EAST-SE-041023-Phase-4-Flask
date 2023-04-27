@@ -66,7 +66,7 @@ def hello():
 try:
     ...
 except Exception, e:
-    return redirect(url_for('index'))
+    raise SomeError('oops')
 
 @app.route('/foo')
 def foo():

@@ -186,9 +186,9 @@ Response syntax
 - Werkzeug
     - toolkit that implements requests, response objects and other utility functions
     - debugger, classes to build requests and process responses, routing, making dev server
+- Flask provides a development WSGI through Werkzeug with `flask run`
 
 ---
-
 ## Why Flask
 - built in debugger
 - easily scalable
@@ -199,7 +199,6 @@ Response syntax
 - small codebase - lots of control for developers
 
 ---
-
 ## Initializing a Flask App
 
 ```js
@@ -275,11 +274,17 @@ def run_before():
 
 ---
 
+
 ## Context
 
-- Application Context: Keeps track of config variables, logger, database connections, etc
+- Application Context: Keeps track of config variables, logger, database connections so that we don't have to pass the entire application from function to function
 - Request Context: Keeps track of request data such as URL, headers, method, request data, etc.
 
 ---
 
 ## Debugging
+
+`import ipdb; ipdb.set_trace()`
+<br />
+
+`@app.before_request`
