@@ -59,7 +59,7 @@
 
 <br />
 
-#### 12. Use the before_request request hook, what this hook does is up to you.
+#### 9. Use the before_request request hook, what this hook does is up to you.
 ##### - Use the decorator: `@app.before_request`
 ##### - Create a function `def runs_before()` that prints `Hello World`
 ##### - Visit a few routes!

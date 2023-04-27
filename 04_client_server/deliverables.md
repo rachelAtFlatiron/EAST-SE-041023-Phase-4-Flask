@@ -2,18 +2,18 @@
 
 
 
-#### 2. In `models.py` import validates
+#### 1. In `models.py` import validates
 
 <br />
 
-##### 2a. Create a constraint on `Production.role` for nullable
-##### 2b. Use the validates decorator to check if `image` contains `.jpg`
+##### 1a. Create a constraint on `Production.role` for nullable
+##### 1b. Use the validates decorator to check if `image` contains `.jpg`
 
 <br />
 
 
-#### 1. Install `honcho` and `gunicorn`
-##### 1a. Create a `Procfile` file that contains scripts to use `honcho` and `gunicorn`
+#### 2. Install `honcho` and `gunicorn`
+##### 2a. Create a `Procfile` file that contains scripts to use `honcho` and `gunicorn`
 
 <br />
 
@@ -47,5 +47,7 @@
 #### 8. Use the `useFormik` hook to check our `POST` against our `yup` schema 
 ##### 8a. Upon successful `POST` redirect to page of new production
 ##### 8b. Create the `onSubmit` and `onChange` events that uses `formik`
+
+<br />
 
 #### 9. Use `formik` to create errors on form when the user doesn't fill it out right
