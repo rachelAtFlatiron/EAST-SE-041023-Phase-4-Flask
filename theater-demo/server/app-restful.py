@@ -27,6 +27,10 @@ db.init_app(app)
 api = Api(app)
 
 #********************custom routes*******************
+@app.route('/')
+def intro():
+    return 'hello'
+
 @app.route('/longest-movies')
 def get_longest_movies():
     prods = Production.query.order_by(Production.length.desc()).limit(5)
