@@ -3,3 +3,7 @@
 myreadme.md
 errors_validations.md
 formik.md
+./*/server/__pycache__
+./*/server/instance
+./*/server/migrations
+./*/server/Pipfile.lock
