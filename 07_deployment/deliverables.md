@@ -1,1 +1,0 @@
-#### 1. Copy project into new folder and `rm -rf .git` to remove the git repository from the folder.
