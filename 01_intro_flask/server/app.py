@@ -34,39 +34,15 @@
 
 # 12. ✅ Routes
     # Create your route
-    
-        # `@app.route('/')
-        #  def index():
-        #    return '<h1>Hello World!</h1>'`
 
 # 13. ✅ Run the server with `flask run` and verify your route in the browser at `http://localhost:5000/`
 
 # 14. ✅ Create a dynamic route
-# `@app.route('/productions/<string:title>')
-#  def production(title):
-#     return f'<h1>{title}</h1>'`
 
 
 # 15.✅ Update the route to find a `production` by its `title` and send it to our browser
     
     # Before continuing, import `jsonify` and `make_response` from Flask at the top of the file.
-    
-    # 📚 Review With Students: status codes
-        # `make_response` will allow us to make a response object with the response body and status code
-        # `jsonify` will convert our query into JSON
-
-    # `@app.route('/productions/<string:title>')
-    # def production(title):
-    #     production = Production.query.filter(Production.title == title).first()
-    #     production_response = {
-    #         "title":production.title,
-    #         "genre":production.genre,
-    #         "director": production.director
-    #         }
-    #     response = make_response(
-    #         jsonify(production_response),
-    #         200
-    #     )`    
 
 # 16.✅ View the path and host with request context
 
@@ -76,4 +52,4 @@
 # and run `python app.py`
 
 # if __name__ == '__main__':
-#     app.run(port=5000, debug=True)
+#     app.run(port=5555, debug=True)
