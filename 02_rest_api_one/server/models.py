@@ -1,10 +1,11 @@
 #5a. Import SerializerMixin
+from sqlalchemy_serializer import SerializerMixin
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
 #5b. Add SerializerMixin to the Production Model -> app.py
-class Production(db.Model):
+class Production(db.Model, SerializerMixin):
     __tablename__ = "productions"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -23,16 +24,32 @@ class Production(db.Model):
 
     # 6. Add serializer rule to remove updated_at and created_at
     # 8a. Add serializer rules to avoid max recursion
-
+    serialize_rules = ('-created_at', '-updated_at', '-roles.production')
 
     # 7b. Create the relationship between Role and Production
+    roles = db.relationship('Role', back_populates='production')
+
+
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # 7a. Create a class Role with ForeignKey to production, and string:role_name : 
+class Role(db.Model, SerializerMixin):
+    __tablename__ = "roles"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    role_name = db.Column(db.String)
+    production_id = db.Column(db.Integer, db.ForeignKey('productions.id'))
+
     #7b. Create the relationship between Role and Production -> seed.py
+    # 🛑 review back_populates
+    production = db.relationship('Production', back_populates='roles')
 
     # 8b. Add serializer rules to avoid max recursion -> [You Do] app.py to write routes for Roles
-
+    serialize_rules = ('-created_at', '-updated_at', '-production.roles')
 
     
