@@ -1,9 +1,6 @@
 #SQLAlchemy import
 from flask_sqlalchemy import SQLAlchemy
 
-# 📚 Review With Students:
-    # What SQLAlchemy() is replacing from SQLAlchemy in phase 3
-     
 db = SQLAlchemy()
 # 1. ✅ Create a Production Model
 	# tablename = 'Productions'
