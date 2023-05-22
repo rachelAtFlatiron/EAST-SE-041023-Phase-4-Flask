@@ -1,12 +1,6 @@
-# 📚 Review With Students:
-    # Review models
-    # Review MVC
-
-#SQLAlchemy import
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-# 1. ✅ Create a Production Model
 class Production(db.Model):
     __tablename__ = "productions"
 
@@ -24,4 +18,3 @@ class Production(db.Model):
     description = db.Column(db.String) 
     composer = db.Column(db.String)
 
-# 2. ✅ navigate to app.py
