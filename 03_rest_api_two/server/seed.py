@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-
-# 7c. uncomment everything regarding Role
-# 7d. Migrate and seed database
-# 7e. Check /productions route
 from app import app
 from models import Production, Role, db
 
 with app.app_context():
     Production.query.delete()
-    #Role.query.delete()
+    Role.query.delete()
     menu = Production(title='the menu',
                       genre='thriller',
                       length=107,
