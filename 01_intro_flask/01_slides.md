@@ -6,10 +6,6 @@ title: '01_intro_flask'
 
 # Intro to Flask
 
-<aside class="notes">
-    Shhh, these are your private notes 📝
-</aside>
-
 ---
 
 ✅ Objectives
@@ -33,6 +29,19 @@ title: '01_intro_flask'
 
 ## Also The Internet
 
+- Architecture 
+- Connects networks across the Earth
+- Ocean cables 
+- Computers
+- Data Centers
+- Servers
+- Satelites
+- Wifi towers
+
+---
+
+## Also The Internet
+
 <img src='https://www.gao.gov/assets/extracts/726c56e9ccd46e3aaf3e4b7b75c60895/rId15_image3.png' width="800px" />
 
 ---
@@ -46,7 +55,9 @@ title: '01_intro_flask'
 
 ## Static vs Dynamic Website
 - static website (doesn't change) is just HTML, CSS JS, almost acts as template for dynamic data coming into these pages
-- dynamic software content is supplied
+<img src="https://rochester.kidsoutandabout.com/sites/default/files/html_css_javascript.jpeg" width="600px" />
+
+- dynamic software content is supplied by server.  a user makes a request, and the server sends back a response
 
 ---
 
@@ -106,22 +117,30 @@ api/v2/pokemon/ditto - path
 
 ## HTTP Protocol
 
+- Hypertext Transfer Protocol
 - Designed in the early 90s
 - Stateless: one request doesn't know about the next
 - Sessions: share info b/w requests by storing user info on the server
     - Sessions usually expire over a certain period of time
 - Cookies: saved in the user's browser and saves users identity (usually anonymously)...this also expires over a certain period of time
 
-<img src="https://www.oreilly.com/api/v2/epubs/9780596802462/files/images/ugae_0104.png" />
+<img src="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview/fetching_a_page.png" width="900px"/>
+
+<aside class="notes">
+What is a protocol? A set of rules on how something should be done.
+HTTP is the protocol describing the structure between client and server communication 
+</aside>
 
 ---
 
-## HTTP Syntax
+## Other Protocols Include...
 
-Fetch request syntax
-<img src="#"/>
-Response syntax
-<img src="#"/>
+- SSH (secure shell) which we've been using in Github
+- HTTPS: hypertext transfer protocol secure
+- SSL (secure sockets layer)
+- IMAP (internet message access protocol)
+- DNS (domain name system) 
+etc ... 
 
 ---
 
@@ -131,6 +150,14 @@ Response syntax
 200: `OK` - yay
 <br />
 201: `Created` - you probably did a POST request
+
+<aside class="notes">
+100's - informational
+200's - success
+300's - redirect
+400's - client error
+500's - server error
+</aside>
 
 ---
 
@@ -170,7 +197,11 @@ Response syntax
 - lightweight data storage for data exchange
 - works with any language
 - easy to read
+
+<aside class="notes">
+- It’s a format to transfer data from client to server
 - sometimes have to specify you will be sending JSON or expecting JSON
+</aside>
 
 ---
 
