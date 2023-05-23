@@ -1,26 +1,28 @@
-import { useParams, redirect, Link } from "react-router-dom";
+import { useParams, redirect, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-function ProductionDetail() {
+function ActorDetail() {
 	const [actor, setActor] = useState({
 		roles: [],
 	});
-	const [error, setError] = useState(null);
 
+	// 3a. fetch current actor based on params
 	const params = useParams();
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		fetch(`/actors/${params.id}`).then((res) => {
 			if (res.ok) {
 				res.json().then((data) => setActor(data));
 			} else {
-				res.json().then((data) => setActor(data.error));
+				// 3c. if response is not ok, navigate to /not-found
+				navigate('/not-found')
 			}
 		});
 	}, []);
 
+	// 3b. destructure the values and display them on page
 	const { id, name, age, country, image } = actor;
-	if (error) return <h2>{error}</h2>;
+
 	return (
 		<div className="project-detail" id={id}>
 			<h1>{name}</h1>
@@ -55,4 +57,4 @@ function ProductionDetail() {
 	);
 }
 
-export default ProductionDetail;
+export default ActorDetail;
