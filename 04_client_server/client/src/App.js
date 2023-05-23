@@ -14,14 +14,14 @@ function App() {
 	const [productions, setProductions] = useState([]);
 	const [actors, setActors] = useState([]);
 
-	useEffect(() => {
-		fetch("/productions")
-			.then((res) => res.json())
-			.then(setProductions);
-		fetch("/actors")
-			.then((res) => res.json())
-			.then(setActors);
-	}, []);
+	// useEffect(() => {
+	// 	fetch("/productions")
+	// 		.then((res) => res.json())
+	// 		.then(setProductions);
+	// 	fetch("/actors")
+	// 		.then((res) => res.json())
+	// 		.then(setActors);
+	// }, []);
 
 	const addProduction = (production) =>
 		setProductions((current) => [...current, production]);
