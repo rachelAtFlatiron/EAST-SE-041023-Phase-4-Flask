@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.associationproxy import association_proxy
 
 db = SQLAlchemy()
 
@@ -21,8 +22,10 @@ class Production(db.Model, SerializerMixin):
     composer = db.Column(db.String)
 
     roles = db.relationship('Role', back_populates='production')
-
-    serialize_rules = ('-created_at', '-updated_at', '-roles.production')
+    actors = association_proxy('roles', 'actor')
+    
+    # 1c. update the serializers for all three classes
+    serialize_rules = ('-created_at', '-updated_at', '-roles.production', '-actors.productions')
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -37,6 +40,30 @@ class Role(db.Model, SerializerMixin):
     production_id = db.Column(db.Integer, db.ForeignKey('productions.id'))
     production = db.relationship('Production', back_populates='roles')
 
-    serialize_rules = ('-created_at', '-updated_at', '-production.roles')
+    actor_id = db.Column(db.Integer, db.ForeignKey('actors.id'))
+    actor = db.relationship('Actor', back_populates='roles')
 
-    
+    # 1c. update the serializers for all three classes
+    serialize_rules = ('-created_at', '-updated_at', '-production.roles', '-actors.roles')
+
+
+# 1a. Review~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 1b. run flask db init, flask db migrate, flask db upgrade, python seed.py
+class Actor(db.Model, SerializerMixin):
+    __tablename__ = "actors"
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    name = db.Column(db.String) 
+    image = db.Column(db.String) 
+    age = db.Column(db.Integer)
+    country = db.Column(db.String)
+
+    roles = db.relationship('Role', back_populates='actor')
+    productions = association_proxy('roles', 'production')
+
+    # 1c. update the serializers for all three classes
+    serialize_rules = ('-created_at', '-updated_at', '-roles.actor', '-productions.actors')
+
