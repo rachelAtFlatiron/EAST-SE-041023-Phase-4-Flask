@@ -1,10 +1,16 @@
 import { redirect } from "react-router-dom";
-
+// 4a. Import useFormik and yup
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 function ProductionForm() {
 
+	// 4b. create yup schema where:
+	// title: required
+	// length: must be positive
+	// year is a minimum of 1850
+	// image: required
+	// description: max length is 250
 	const schema = yup.object().shape({
 		title: yup.string().required("required"),
 		genre: yup.string(),
@@ -17,7 +23,9 @@ function ProductionForm() {
 		composer: yup.string(),
 	});
 
+	// 4c. create formik with...
 	const formik = useFormik({
+		// 4c. ...initial values of form...
 		initialValues: {
 			title: "",
 			genre: "",
@@ -29,7 +37,9 @@ function ProductionForm() {
 			description: "",
 			composer: "",
 		},
+		// 4c...yup schema for validation....
 		validationSchema: schema,
+		// 4c. submit callback
 		onSubmit: (values) => {
 			console.log(values);
 			fetch("/productions", {
@@ -53,15 +63,20 @@ function ProductionForm() {
 
 	return (
 		<section>
+			{/* 5a. attach formik submit handler to form */}
 			<form onSubmit={formik.handleSubmit} className="form">
 				<label>Title </label>
 				<input
 					type="text"
 					name="title"
-					value={formik.values.title}
+					// 5b. attach formik change handler to inputs 
 					onChange={formik.handleChange}
+					// 5c. pass in formik values to make form controlled
+					value={formik.values.title}
+					// 6a. add onBlur event to allow formik to update "formik.touched"
 					onBlur={formik.handleBlur}
 				/>
+				{/* 6b. use formik.touched and formik.errors to render errors where needed */}
 				{formik.touched.title && formik.errors.title ? (
 					<h3>{formik.errors.title}</h3>
 				) : (
