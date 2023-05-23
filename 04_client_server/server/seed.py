@@ -1,5 +1,9 @@
 from app import app
 from models import db, Production, Role, Actor
+from faker import Faker
+
+# application context - gives us access to context and data within the application we are working on as it is running
+# need to use with_context to use seeds
 
 with app.app_context():
     Production.query.delete()
@@ -374,3 +378,4 @@ with app.app_context():
             don, oscar, morrible, wizard, captain, levinson, gamora, aleta, deputy, monsieur, evelyn, chef, margot]
     db.session.add_all(roles)
     db.session.commit()
+
