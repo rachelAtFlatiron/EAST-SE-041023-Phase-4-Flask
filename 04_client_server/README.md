@@ -1,7 +1,7 @@
 # Deliverables
 
 ### 1. Use gunicorn to start the client and server
-#### 1a. Install `gunicorn`, `honcho`, and `flask-cors`
+#### 1a. Install `gunicorn`, `honcho`
 #### 1b. Create a `Procfile.dev` file and write:
 ```js
 web: PORT=3000 npm start --prefix client
@@ -19,6 +19,7 @@ api: gunicorn -b 127.0.0.1:5555 --chdir ./server
 ### 3. In `ProductionDetail.js` and `ActorDetail.js`
 #### 3a. Fetch the current `production` and `actor` based on the url params
 #### 3b. Destructure the values and display them on the page
+#### 3c. If the response throws and error, redirect to the `/not-found` client route
 <br />
 
 ### 4. Use `formik` and `yup` to create a `ProductionForm`

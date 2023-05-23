@@ -6,6 +6,12 @@ from models import db, Production, Role, Actor
 from flask_restful import Api, Resource
 from werkzeug.exceptions import NotFound, UnprocessableEntity
 
+# 1. Use gunicorn to start client and server
+# 1a. Install gunicorn and honcho
+# 1b. Create a Procfile.dev and write the following:
+#   web: PORT=3000 npm start --prefix client
+#   api: gunicorn -b 127.0.0.1:5555 --chdir ./server
+# 1c. run `honcho start -f Procfile.dev`
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
