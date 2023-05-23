@@ -24,7 +24,7 @@ class Production(db.Model, SerializerMixin):
     actors = association_proxy('roles', 'actor')
     
     # 1c. update the serializers for all three classes
-    serialize_rules = ('-created_at', '-updated_at', '-roles.production', '-actors.productions')
+    serialize_rules = ('-created_at', '-updated_at')
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -46,7 +46,7 @@ class Actor(db.Model, SerializerMixin):
     productions = association_proxy('roles', 'production')
 
     # 1c. update the serializers for all three classes
-    serialize_rules = ('-created_at', '-updated_at', '-roles.actor', '-productions.actors')
+    serialize_rules = ('-created_at', '-updated_at')
         
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -66,6 +66,6 @@ class Role(db.Model, SerializerMixin):
     actor = db.relationship('Actor', back_populates='roles')
 
     # 1c. update the serializers for all three classes
-    serialize_rules = ('-created_at', '-updated_at', '-production.roles', '-actors.roles')
+    serialize_rules = ('-created_at', '-updated_at')
 
 
