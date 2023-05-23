@@ -28,7 +28,6 @@ class Production(db.Model, SerializerMixin):
     roles = db.relationship('Role', back_populates='production')
     actors = association_proxy('roles', 'actor')
     
-    # 1c. update the serializers for all three classes
     serialize_rules = ('-created_at', '-updated_at', '-roles.production', '-actors.productions')
 
     # 9b. validation: image must be 'png', 'jpg', or 'jpeg'
@@ -50,8 +49,6 @@ class Production(db.Model, SerializerMixin):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# 1a. Review
-# 1b. run flask db init, flask db migrate, flask db upgrade, python seed.py
 class Actor(db.Model, SerializerMixin):
     __tablename__ = "actors"
 
@@ -68,7 +65,6 @@ class Actor(db.Model, SerializerMixin):
     roles = db.relationship('Role', back_populates='actor')
     productions = association_proxy('roles', 'production')
 
-    # 1c. update the serializers for all three classes
     serialize_rules = ('-created_at', '-updated_at', '-roles.actor', '-productions.actors')
 
     # 9c. validation: age must be between 0 and 200
@@ -99,7 +95,6 @@ class Role(db.Model, SerializerMixin):
     actor_id = db.Column(db.Integer, db.ForeignKey('actors.id'), nullable=False) # 8c. required
     actor = db.relationship('Actor', back_populates='roles')
 
-    # 1c. update the serializers for all three classes
     serialize_rules = ('-created_at', '-updated_at', '-production.roles', '-actors.roles')
 
 
