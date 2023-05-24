@@ -14,9 +14,9 @@ function App() {
 	const [productions, setProductions] = useState([]);
 	const [actors, setActors] = useState([]);
 
-	// 2a. create a useEffect to fetch from /productions and /actors
+	// 3a. create a useEffect to fetch from /productions and /actors
 	useEffect(() => {
-		// 2b. save the result in state
+		// 3b. save the result in state
 		fetch("/productions")
 			.then((res) => res.json())
 			.then(setProductions);
@@ -38,12 +38,12 @@ function App() {
 				/>
 				<Route path="/productions/:id" element={<ProductionDetail />} />
 
-				{/* 2c. pass productions here down  */}
+				{/* 3c. pass productions here down  */}
 				<Route path="/productions" element={<ProductionContainer productions={productions} />} />
 
 				<Route path="/actors/:id" element={<ActorDetail />} />
 
-				{/* 2c. pass actors here down  */}
+				{/* 3c. pass actors here down  */}
 				<Route path="/actors" element={<ActorContainer actors={actors} />} />
 				<Route path="/not-found" element={<NotFound />} />
 

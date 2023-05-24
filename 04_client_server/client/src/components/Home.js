@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import ProductionCard from "./production/ProductionCard";
 
 function Home() {
+
+	// 2a. create state for the longest movies
 	const [longest, setLongest] = useState([]);
+
+	// 2b. use useEffect to fetch /longest-movies and update state
 	useEffect(() => {
 		fetch("/longest-movies")
 			.then((res) => res.json())
