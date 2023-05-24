@@ -6,11 +6,11 @@ function ActorDetail() {
 		roles: [],
 	});
 
-	// 3a. fetch current actor based on params
-			// 3a. save actor data in state
-			// 3c. if response is not ok, navigate to /not-found
+	// 4a. fetch current actor based on params
+			// 4a. save actor data in state
+			// 4c. if response is not ok, navigate to /not-found
 
-	// 3b. destructure the values and display them on page
+	// 4b. destructure the values and display them on page
 	const { id, name, age, country, image } = actor;
 
 	return (

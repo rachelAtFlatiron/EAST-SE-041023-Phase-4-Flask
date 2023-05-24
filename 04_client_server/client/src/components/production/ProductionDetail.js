@@ -6,12 +6,12 @@ function ProductionDetail() {
 		roles: []
 	});
 
-	// 3a. fetch current production based on params
-			// 3a. save production in state
-			// 3c. if response is not ok, navigate to /not-found
+	// 4a. fetch current production based on params
+			// 4a. save production in state
+			// 4c. if response is not ok, navigate to /not-found
 
 
-	// 3b. destructure the values and display them on page
+	// 4b. destructure the values and display them on page
 	const { id, title, genre, image, description, director, length, composer } = production;
 	
 	return (

@@ -1,32 +1,32 @@
-// 4a. Import useFormik and yup
+// 5a. Import useFormik and yup
 
 function ProductionForm() {
 
-	// 4b. create yup schema where:
+	// 5b. create yup schema where:
 	// title: required
 	// length: must be positive
 	// year is a minimum of 1850
 	// image: required
 	// description: max length is 250
 
-	// 4c. create formik with...
-		// 4c. ...initial values of form...
-		// 4c...yup schema for validation....
-		// 4c. submit callback
+	// 5c. create formik with...
+		// 5c. ...initial values of form...
+		// 5c...yup schema for validation....
+		// 5c. submit callback
 
 	return (
 		<section>
-			{/* 5a. attach formik submit handler to form */}
+			{/* 6a. attach formik submit handler to form */}
 			<form onSubmit={() => {}} className="form">
 				<label>Title </label>
 				<input
 					type="text"
 					name="title"
-					// 5b. attach formik change handler to inputs 
-					// 5c. pass in formik values to make form controlled
-					// 6a. add onBlur event to allow formik to update "formik.touched"
+					// 6b. attach formik change handler to inputs 
+					// 6c. pass in formik values to make form controlled
+					// 7a. add onBlur event to allow formik to update "formik.touched"
 				/>
-				{/* 6b. use formik.touched and formik.errors to render errors where needed */}
+				{/* 7b. use formik.touched and formik.errors to render errors where needed */}
 
 				<label> Genre</label>
 				<input
