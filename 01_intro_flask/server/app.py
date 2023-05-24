@@ -41,8 +41,21 @@ def index():
 
 # 13. ✅ Run the server with `flask run` and verify your route in the browser at `http://localhost:5000/`
 
-# 14. ✅ Create a dynamic route
-# 15.✅ Update the route to find a `production` by its `title` and send it to our browser
+#14.✅ Create a path to retrieve the first 5 longest movies
+@app.route('/longest-movies')
+def get_longest_movies():
+    prods = Production.query.order_by(Production.length.desc()).limit(5)
+    prods_list = []
+    for p in prods:
+        prods_list.append({
+            "title": p.title,
+            "genre": p.genre,
+            "length": p.length
+        })
+    return make_response(prods_list, 200)
+
+# 15. ✅ Create a dynamic route
+# 16.✅ Update the route to find a `production` by its `title` and send it to our browser
 
 # 🛑 Before continuing, import `jsonify` and `make_response` from Flask at the top of the file.
     
@@ -65,20 +78,21 @@ def production(title):
         200
     )
 
-# 16.✅ View the path and host with request context
+# 17.✅ View the path and host with request context
 # 🛑 Import request - this is a LocalProxy object from werkzeug, 
 @app.route('/context')
 def context():
-    import ipdb; 
-    ipdb.set_trace()
+    # import ipdb; 
+    # ipdb.set_trace()
     return f'<h1>Path{request.path} Host:{request.host}</h1>'
 
 
-# 17.✅ Use the before_request request hook, what this hook does is up to you. You could hit a breakpoint, print something to server console or anything else you can think of.
+# 18.✅ Use the before_request request hook, what this hook does is up to you. You could hit a breakpoint, print something to server console or anything else you can think of.
 @app.before_request
 def runs_before():
     current_user={"user_id":1, "username":"rose"}
     print(current_user)
+
 
 # Note: If you'd like to run the application as a script instead of using `flask run`, uncomment the line below 
 # and run `python app.py`
