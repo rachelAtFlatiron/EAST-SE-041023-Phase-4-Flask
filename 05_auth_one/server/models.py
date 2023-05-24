@@ -89,4 +89,16 @@ class Role(db.Model, SerializerMixin):
 
     serialize_rules = ('-created_at', '-updated_at', '-production.roles', '-actors.roles')
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+class User(db.Model, SerializerMixin):
+    __tablename__ = "users" 
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    name = db.Column(db.String)
+    username = db.Column(db.String)
+
+    serialize_rules = ('-created_at', '-updated_at')

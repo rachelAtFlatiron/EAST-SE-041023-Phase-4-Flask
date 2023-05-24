@@ -6,7 +6,6 @@ function ActorDetail() {
 		roles: [],
 	});
 
-	// 3a. fetch current actor based on params
 	const params = useParams();
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -14,13 +13,11 @@ function ActorDetail() {
 			if (res.ok) {
 				res.json().then((data) => setActor(data));
 			} else {
-				// 3c. if response is not ok, navigate to /not-found
 				navigate('/not-found')
 			}
 		});
 	}, []);
 
-	// 3b. destructure the values and display them on page
 	const { id, name, age, country, image } = actor;
 
 	return (

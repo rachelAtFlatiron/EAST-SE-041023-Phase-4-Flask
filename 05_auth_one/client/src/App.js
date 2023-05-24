@@ -9,42 +9,75 @@ import ActorDetail from "./components/actor/ActorDetail";
 import ProductionContainer from "./components/production/ProductionContainer";
 import ProductionForm from "./components/production/ProductionForm";
 import ProductionDetail from "./components/production/ProductionDetail";
+import Auth from "./components/Auth";
 
 function App() {
 	const [productions, setProductions] = useState([]);
 	const [actors, setActors] = useState([]);
+	// 4a. create user state and update user function
+	const [user, setUser] = useState(null)
 
-	// 2a. create a useEffect to fetch from /productions and /actors
 	useEffect(() => {
-		// 2b. save the result in state
 		fetch("/productions")
 			.then((res) => res.json())
 			.then(setProductions);
 		fetch("/actors")
 			.then((res) => res.json())
 			.then(setActors);
+		// 9c. invoke getUser
+		getUser()
 	}, []);
+
+	// 4a. update user function
+	const updateUser = (user) => {
+		setUser(user)
+	}
+
+	// 9a. create function that GETs /authorized-session
+	const getUser = () => {
+		fetch('/authorized-session')
+		.then(res => {
+			// 9b. if res.ok update user with the response
+			if(res.ok){
+				res.json().then(data => {
+					setUser(data)
+				})
+			} else {
+				setUser(null)
+			}
+		})
+	}
 
 	const addProduction = (production) =>
 		setProductions((current) => [...current, production]);
-
+	
+	// 7a. if no user, return essential JSX
+	if (!user){
+		return (
+			<div className="App light">
+				<Navigation updateUser={updateUser} user={user} />
+				<Auth updateUser={updateUser} />
+			</div>
+		)
+	}
 	return (
 		<div className="App light">
-			<Navigation />
+			<Navigation updateUser={updateUser} user={user} />
 			<Routes>
+				< Route path = "/auth" element={<Auth updateUser={updateUser} />} />
+
 				<Route path="/actors/new" element={<ActorForm />} />
 
-				<Route path="/productions/new" element={<ProductionForm addProduction={addProduction} />}
-				/>
+				<Route path="/productions/new" element={<ProductionForm addProduction={addProduction} />} />
+				
 				<Route path="/productions/:id" element={<ProductionDetail />} />
 
-				{/* 2c. pass productions here down  */}
 				<Route path="/productions" element={<ProductionContainer productions={productions} />} />
 
 				<Route path="/actors/:id" element={<ActorDetail />} />
 
-				{/* 2c. pass actors here down  */}
 				<Route path="/actors" element={<ActorContainer actors={actors} />} />
+
 				<Route path="/not-found" element={<NotFound />} />
 
 				<Route exact path="/" element={<Home />} />
