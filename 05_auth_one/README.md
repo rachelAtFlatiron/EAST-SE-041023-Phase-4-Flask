@@ -101,3 +101,12 @@ api.secret_key = <secret_key>
 ### 11. Show user greeting in `Navigation.js`
 #### 11a. Pass down state `user` from `App.js` to `Navigation.js`
 #### 11b. Conditionally render the logout button and a greeting
+
+```js
+<>
+    <button onClick={} className="button">
+        Log Out
+    </button>
+    <p style={{'margin-top': '8px'}}>Hello, {}</p>
+</>
+```

@@ -15,7 +15,6 @@ function App() {
 	const [productions, setProductions] = useState([]);
 	const [actors, setActors] = useState([]);
 	// 4a. create user state and update user function
-	const [user, setUser] = useState(null)
 
 	useEffect(() => {
 		fetch("/productions")
@@ -25,46 +24,22 @@ function App() {
 			.then((res) => res.json())
 			.then(setActors);
 		// 9c. invoke getUser
-		getUser()
 	}, []);
 
 	// 4a. update user function
-	const updateUser = (user) => {
-		setUser(user)
-	}
 
 	// 9a. create function that GETs /authorized-session
-	const getUser = () => {
-		fetch('/authorized-session')
-		.then(res => {
 			// 9b. if res.ok update user with the response
-			if(res.ok){
-				res.json().then(data => {
-					setUser(data)
-				})
-			} else {
-				setUser(null)
-			}
-		})
-	}
 
 	const addProduction = (production) =>
 		setProductions((current) => [...current, production]);
 	
 	// 7a. if no user, return essential JSX
-	if (!user){
-		return (
-			<div className="App light">
-				<Navigation updateUser={updateUser} user={user} />
-				<Auth updateUser={updateUser} />
-			</div>
-		)
-	}
 	return (
 		<div className="App light">
-			<Navigation updateUser={updateUser} user={user} />
+			<Navigation updateUser={() => {}} user={null} />
 			<Routes>
-				< Route path = "/auth" element={<Auth updateUser={updateUser} />} />
+				< Route path = "/auth" element={<Auth updateUser={() => {}} />} />
 
 				<Route path="/actors/new" element={<ActorForm />} />
 
