@@ -28,10 +28,6 @@ function Home() {
 					</section>
 				))}
 			</ul>
-
-			<section>
-				<h2>Most Popular Actors</h2>
-			</section>
 		</div>
 	);
 }
