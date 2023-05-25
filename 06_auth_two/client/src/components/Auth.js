@@ -8,9 +8,8 @@ function Auth({ updateUser }) {
     const navigate = useNavigate()
 	const toggleSignup = () => setSignup((prev) => !prev);
 
-    // 3a. create a validations schema using yup
     const formSchema = yup.object().shape({
-        name: yup.string(), // 🛑 not required due to login form
+        name: yup.string(),
         username: yup.string().required("Please enter a username")
     })
     const formik = useFormik({
@@ -19,10 +18,7 @@ function Auth({ updateUser }) {
             name: ''
         },
         validationSchema: formSchema,
-        // 🛑 pass in actions to have access to reset form
         onSubmit: (values, actions) => {
-            // 🛑 need to conditionally render between /users and /login due to forms
-            // 🛑 may write /login later
             fetch(signup ? '/users' : '/login', {
                 method: 'POST',
                 headers: {
@@ -32,11 +28,8 @@ function Auth({ updateUser }) {
             })
             .then(res => res.json())
             .then(data => {
-                // 🛑 reset form
                 actions.resetForm()
-                // 4c. pass result to updateUser to set state
                 updateUser(data)    
-                // 4d. redirect to homepage if login is successful
                 navigate('/')
             })
         }
