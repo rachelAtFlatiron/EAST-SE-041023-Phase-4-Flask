@@ -377,12 +377,3 @@ with app.app_context():
 
     # ~~~~~~~~~~~~~~~~~~~~~USERS~~~~~~~~~~~~~~~~~~~
     # user = User(name="", username="")
-
-    u_one = User(name="Bob White", username="Mr. White")
-    u_two = User(name="Taylor Swift", username="Tay")
-    u_three = User(name="Ronald Swanson", username="Ron")
-    u_four = User(name="Cher", username="Cher")
-
-    users = [u_one, u_two, u_three, u_four]
-    db.session.add_all(users)
-    db.session.commit()

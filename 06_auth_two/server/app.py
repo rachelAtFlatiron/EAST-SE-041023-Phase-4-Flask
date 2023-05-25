@@ -2,22 +2,26 @@
 
 from flask import Flask, jsonify, make_response, request, abort, session
 from flask_migrate import Migrate 
-from models import db, Production, Role, Actor, User
+# 1b. import bcrypt
+from flask_bcrypt import Bcrypt
 from flask_restful import Api, Resource
 from werkzeug.exceptions import NotFound, UnprocessableEntity, Unauthorized
 
 app = Flask(__name__)
+# 1c. pass app to bcrypt
+# 🛑 we call bcrypt before models in order to avoid a circular import
+# 🛑 circular import: when two or more modules mutually depend on each other
+# 🛑 want to be done setting up app before importing anything from models
+bcrypt = Bcrypt(app)
+
+
+from models import db, Production, Role, Actor, User
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False 
-
 app.secret_key = b'jV9\xed\x13G\xd2"\xcaZd\xafQ\xc68u'
-
 migrate = Migrate(app, db)
-
-api = Api(app)
-
 db.init_app(app)
-
+api = Api(app)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 @app.route('/')
@@ -47,34 +51,46 @@ def logout():
 
 @app.route('/authorized-session', methods=["GET"])
 def authorize():
-    user = User.query.filter_by(id=session.get('user_id')).first()
-    if user: 
+    try:
+        user = User.query.filter_by(id=session.get('user_id')).first()
         return make_response(user.to_dict(), 200)
-    else: 
+    except: 
         raise Unauthorized("invalid credentials")
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class Users(Resource):
+# 6a. create signup resource
+class Signup(Resource):
     def post(self):
         data = request.get_json()
-        user = User(name=data.get('name'), username=data.get('username'))
-        db.session.add(user)
+        # 🛑 if we save password in new_user (to the _password_hash) we will be saving plaintext password
+        new_user = User(name=data['name'], username=data['username'])
+        # 6b. hash the given password and save it to _password_hash
+        # 🛑 this causes the password go through code written in @password_hash.setter
+        new_user.password_hash = data['password']
+        db.session.add(new_user)
         db.session.commit()
-
-        session['user_id'] = user.id
-        return make_response(user.to_dict(), 201)
-api.add_resource(Users, '/users')
+        # 6c. save the user_id in session
+        session['user_id'] = new_user.id
+        # 🛑 suggested: don't pass the _password_hash to the front end
+        return make_response(new_user.to_dict(), 201)
+api.add_resource(Signup, '/signup')
 
 class Login(Resource):
     def post(self):
-        data = request.get_json()
-        user = User.query.filter_by(username=data.get('username')).first()
-        if (user):
-            session['user_id'] = user.id
-            return make_response(user.to_dict(), 200)
-        else:
-            raise Unauthorized('invalid credentials')
+        try:
+            data = request.get_json()
+            # 7a. check if user exists
+            user = User.query.filter_by(username=data.get('username')).first()
+            # 7b. check if password is authentic
+            if user.authenticate(data.get('password')):
+                # 7c. set session's user id
+                session['user_id'] = user.id 
+                return make_response(user.to_dict(), 200)
+        except: 
+            # 7d. send error 
+            raise Unauthorized("invalid credentials")
+
 api.add_resource(Login, '/login')            
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

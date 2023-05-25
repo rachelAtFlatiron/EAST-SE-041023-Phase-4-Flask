@@ -9,6 +9,11 @@ flask-sqlalchemy = "*"
 gunicorn = "*"
 honcho = "*"
 flask-cors = "*"
+flask-bcrypt = "*"
+flask-migrate = "*"
+flask-restful = "*"
+sqlalchemy-serializer = "*"
+ipdb = "*"
 
 [dev-packages]
 
