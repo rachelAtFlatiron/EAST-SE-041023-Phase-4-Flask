@@ -5,7 +5,6 @@ import * as yup from "yup";
 
 function Auth({ updateUser }) {
 	const [signup, setSignup] = useState(true);
-	// 8a. create state error
 	const [error, setError] = useState(null);
 
 	const navigate = useNavigate();
@@ -38,7 +37,6 @@ function Auth({ updateUser }) {
 						navigate("/");
 					});
 				} else {
-					// 8b. set error message
 					res.json().then((err) => setError(err.message));
 				}
 			});
@@ -85,7 +83,6 @@ function Auth({ updateUser }) {
 						""
 					)}
 					<input type="submit" value="Sign Up" className="button" />
-					{/* 8c. use conditional rendering to display the error to user */}
 					{error ? <label style={{ color: "red" }}>{error}</label> : ""}
 				</form>
 			) : (
@@ -119,7 +116,6 @@ function Auth({ updateUser }) {
 						""
 					)}
 					<input type="submit" value="Log In" className="button" />
-					{/* 8c. use conditional rendering to display the error to user */}
 					{error ? <label style={{ color: "red" }}>{error}</label> : ""}
 				</form>
 			)}

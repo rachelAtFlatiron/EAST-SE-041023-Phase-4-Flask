@@ -133,7 +133,7 @@ with app.app_context():
         director = "Ridley Scott",
         composer = "Harry Gregoson-Williams",
         length = 158,
-        image = "https =//m.media-amazon.com/images/M/MV5BZThjMTA5YjgtZmViZi00YjY0LTk5MzQtMjUwMGEzZGVlYzFjXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg",
+        image = "https://m.media-amazon.com/images/M/MV5BZThjMTA5YjgtZmViZi00YjY0LTk5MzQtMjUwMGEzZGVlYzFjXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg",
         description = "A legacy worth killing for. A name to die for.",
         language = "English",
         year = 2021
