@@ -1,79 +1,79 @@
-# Phase 4 - Flask
+# Flask Routes: Deliverables
 
-## Phase Level Objectives
+### 1. Create `GET` `/productions`
+#### 1a. Write the query to database
+#### 1b. Convert query to a dictionary
+#### 1c. Return result with `make_respone`
+#### 1d. Test in Postman
 
-- Build and run a Flask application
-- Create a REST API capable of interacting with a client
-- Specify requirements and structure of incoming and outgoing data
+<br />
 
+---
 
-| Lecture | Notes | Videos | Starter | Solution |
-| ------- | :---: | ------ | ------- | -------- |
-| 1. Intro To Flask | [Notes](https://docs.google.com/document/d/1w8sYq3sZDyl79ukfz2ALCFyOD6dpGVoTWfZa0V--dU0/edit?usp=sharing) | Video | Starter | Solution |
-| 2. Rest APIs with Flask pt1 | Notes | Video | Starter | Solution |
-| 3. Rest APIs with Flask pt2  | Notes | Video | Starter | Solution |     |
-| 4. Client Server Communication  | Notes | Video | Starter | Solution |
-| 5. Auth pt1  | Notes | Video | Starter | Solution |
-| 6. Auth pt2  | Notes | Video | Starter | Solution |
-| 7. Deployment  | Notes | Video | Starter | Solution |
+<br />
 
-***
-## 1: Intro to Flask
-### SWBATs:
-- [ ] Understand how the Internet works
-- [ ] Understand how the request-response cycle works
-- [ ] Understand HTTP protocols
-- [ ] Intialize a Flask application
-- [ ] Understand how to use SQLAlchemy within Flask
-- [ ] Use Flask routing and create views
-- [ ] Use the Flask shell 
+### 2. Create `GET` `/productions/:id`
 
-***
+<br />
 
-## 2: REST APIs with Flask pt1
-### SWBATs:
-- [ ] Explain the concept of REST and RESTful naming conventions
-- [ ] Build and execute a GET and POST request
-- [ ] Use Postman to interact with Flask
-- [ ] Use serializers
+---
 
-***
+<br />
 
-## 3: REST APIs with Flask pt2 
-### SWBATs:
-- [ ] Build and execute a PATCH and DELETE request 
-- [ ] Discuss the importance of handling exceptions
-- [ ] Handle exceptions
-- [ ] Use Flask validations
+### 3. Create `POST` `/productions`
+#### 3a. Get information from request using `.get_json()`
+#### 3b. Create a new object
+#### 3c. Add and commit to `db`
+#### 3d. Convert to dictionary
+#### 3e. Return as JSON
+#### 3f. Test in Postman
 
-***
+<br />
 
-## 4. Client Server Communication
-### SWBATS:
-- [ ] Discuss MVC architecture
-- [ ] Connect a React app to a Flask API
-- [ ] Execute requests from React
-- [ ] Handle errors in React
-- [ ] Discuss CORS
+---
 
-***
+<br />
 
-## 5: Authentication pt1
-### SWBATs:
-- [ ] Discuss the importance of authentication in web apps
-- [ ] Explain the difference between authentication and authorization
-- [ ] Discuss the relationship between cookies and sessions
-- [ ] Use token-based authentication using cookies and sessions
+### 4. Create `DELETE` `/productions/:id`
 
-*** 
+<br />
 
-## 6: Authentication pt 2
-### SWBATs:
-- [ ] Use authorization 
-- [ ] Handle authorization errors on the front end 
+---
 
-***
+<br />
 
-## 7: Deployment
-### SWBATs:
-- [ ] Deploy an app using [Render](https://render.com/)
+### 5. Explore Serializers
+#### 5a. In `models.py` import `SerializerMixin`
+#### 5b. Pass `SerializerMixin` into `Production`
+#### 5c. Use `to_dict()` for all responses
+
+<br />
+
+---
+
+<br />
+
+### 6. In `models.py` add a `serialize_rules` to `Production` to remove `updated_at` and `created_at`
+
+<br />
+
+---
+
+<br />
+
+### 7. Create a `Role` table in `models.py`
+#### 7a. Create `Role` with `role_name`, `production_id`
+#### 7b. Create the relationship between `Role` and `Production`
+#### 7c. Uncomment `Role` seeds in `seed.py`
+#### 7d. Migrate and seed database
+#### 7e. Check `/productions` route
+
+<br />
+
+---
+
+<br />
+
+### 8. Add to `serializer_rules` in `models.py` to avoid max-recursion
+#### 8a. Add to `Production`
+#### 8b. Add to `Role`
