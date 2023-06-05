@@ -8,15 +8,6 @@ title: '02_rest_api_one'
 
 ---
 
-✅ Objectives
-
-- [ ] Explain the concept of REST and RESTful naming conventions
-- [ ] Build and execute a GET and POST request
-- [ ] Use Postman to interact with Flask
-- [ ] Use serializers
-
----
-
 ## Flask-RESTful
 
 - an extension for Flask that adds support for building APIs

@@ -8,17 +8,6 @@ title: '01_intro_flask'
 
 ---
 
-✅ Objectives
-- [ ] Understand how the Internet works
-- [ ] Understand how the request-response cycle works
-- [ ] Understand HTTP protocols
-- [ ] Intialize a Flask application
-- [ ] Understand how to use SQLAlchemy within Flask
-- [ ] Use Flask routing and create views
-- [ ] Use the Flask shell 
-
----
-
 ## What is The Internet
 
 - Architecture 

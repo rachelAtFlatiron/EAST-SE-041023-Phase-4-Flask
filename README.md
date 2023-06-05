@@ -10,12 +10,13 @@
 | Lecture | Notes | Videos | Starter | Solution |
 | ------- | :---: | ------ | ------- | -------- |
 | 1. Intro To Flask | [Notes](https://docs.google.com/document/d/1w8sYq3sZDyl79ukfz2ALCFyOD6dpGVoTWfZa0V--dU0/edit?usp=sharing) | Video | Starter | Solution |
-| 2. Rest APIs with Flask pt1 | Notes | Video | Starter | Solution |
-| 3. Rest APIs with Flask pt2  | Notes | Video | Starter | Solution |     |
-| 4. Client Server Communication  | Notes | Video | Starter | Solution |
-| 5. Auth pt1  | Notes | Video | Starter | Solution |
-| 6. Auth pt2  | Notes | Video | Starter | Solution |
-| 7. Deployment  | Notes | Video | Starter | Solution |
+| 2. Flask Routes | Notes | Video | Starter | Solution |
+| 3. Rest APIs with Flask | Notes | Video | Starter | Solution | 
+| 4. Exceptions and Validations  | Notes | Video | Starter | Solution |
+| 5. Client Server Communication  | Notes | Video | Starter | Solution |
+| 6. Auth pt1  | Notes | Video | Starter | Solution |
+| 7. Auth pt2  | Notes | Video | Starter | Solution |
+| 8. Deployment  | Notes | Video | Starter | Solution |
 
 ***
 ## 1: Intro to Flask
@@ -30,25 +31,29 @@
 
 ***
 
-## 2: REST APIs with Flask pt1
+## 2: Flask Routes
 ### SWBATs:
-- [ ] Explain the concept of REST and RESTful naming conventions
-- [ ] Build and execute a GET and POST request
+- [ ] Build and execute a GET, POST, PATCH, DELETE request
 - [ ] Use Postman to interact with Flask
 - [ ] Use serializers
 
 ***
 
-## 3: REST APIs with Flask pt2 
+## 3: REST APIs with Flask 
 ### SWBATs:
+- [ ] Explain the concept of REST and RESTful naming conventions
 - [ ] Build and execute a PATCH and DELETE request 
+
+***
+
+## 4: Exceptions and Validations
 - [ ] Discuss the importance of handling exceptions
 - [ ] Handle exceptions
 - [ ] Use Flask validations
 
 ***
 
-## 4. Client Server Communication
+## 5. Client Server Communication
 ### SWBATS:
 - [ ] Discuss MVC architecture
 - [ ] Connect a React app to a Flask API
@@ -58,7 +63,7 @@
 
 ***
 
-## 5: Authentication pt1
+## 6: Authentication pt1
 ### SWBATs:
 - [ ] Discuss the importance of authentication in web apps
 - [ ] Explain the difference between authentication and authorization
@@ -67,13 +72,13 @@
 
 *** 
 
-## 6: Authentication pt 2
+## 7: Authentication pt 2
 ### SWBATs:
 - [ ] Use authorization 
 - [ ] Handle authorization errors on the front end 
 
 ***
 
-## 7: Deployment
+## 8: Deployment
 ### SWBATs:
 - [ ] Deploy an app using [Render](https://render.com/)
