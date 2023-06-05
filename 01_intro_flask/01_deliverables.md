@@ -42,24 +42,32 @@
 <br />
 
 #### 6. Create a `/` route which will return a view with  `<h1>Hello World!</h1>`
+##### 6a. Run the server with `flask run --debug` to verify the route in the browser
 
 <br />
 
-#### 7. Create a dynamic route `/productions/<string:title>` that searches for all matching records
+#### 7. Create a `/longest-movies` route to retrieve the first 5 longest movies
 ##### 7a. Import `jsonify` and `make_response`
-##### 7b. Create the route() decorator
-##### 7c. Create a function `def production()` that filters through all Production records and returns the appropriate one
-##### 7d. Return the result as json
+##### 7b. Use the `route()` decorator
+##### 7c. Query for the top 5 longest movies
+##### 7d. Jsonify and return the response
 
 <br />
 
-#### 8. Use `ipdb` to view request context
-##### 8a. Inside the `production()` function, run `import ipdb; ipdb.set_trace()`
-##### 8b. Visit the route and check out the console!
+#### 8. Create a dynamic route `/productions/<string:title>` that searches for all matching records
+##### 8a. Use the `route()` decorator
+##### 8b. Create a function `def production()` that filters through all Production records and returns the appropriate one
+##### 8c. Return the result as json
 
 <br />
 
-#### 9. Use the before_request request hook, what this hook does is up to you.
+#### 9. Use `ipdb` to view request context
+##### 9a. Inside the `production()` function, run `import ipdb; ipdb.set_trace()`
+##### 9b. Visit the route and check out the console!
+
+<br />
+
+#### 10. Use the before_request request hook, what this hook does is up to you.
 ##### - Use the decorator: `@app.before_request`
 ##### - Create a function `def runs_before()` that prints `Hello World`
 ##### - Visit a few routes!

@@ -19,15 +19,7 @@ title: '01_intro_flask'
 
 ---
 
-## What is The Internet?
-
----
-
-<img src='https://media-cldnry.s-nbcnews.com/image/upload/newscms/2015_34/1182941/theinternet-egodeath-coverart.jpg' width='500px' />
-
----
-
-## Also The Internet
+## What is The Internet
 
 - Architecture 
 - Connects networks across the Earth
@@ -35,83 +27,28 @@ title: '01_intro_flask'
 - Computers
 - Data Centers
 - Servers
-- Satelites
+- Sattelites
 - Wifi towers
 
 ---
 
-## Also The Internet
+## What is The Internet
 
 <img src='https://www.gao.gov/assets/extracts/726c56e9ccd46e3aaf3e4b7b75c60895/rId15_image3.png' width="800px" />
 
----
-
-## WWW
-
-- websites (single domain pages on the web)
-- web apps (software accessible through the web)
-
----
-
-## Static vs Dynamic Website
-- static website (doesn't change) is just HTML, CSS JS, almost acts as template for dynamic data coming into these pages
-<img src="https://rochester.kidsoutandabout.com/sites/default/files/html_css_javascript.jpeg" width="600px" />
-
-- dynamic software content is supplied by server.  a user makes a request, and the server sends back a response
+<aside class="notes">
+Fun Fact: ARPANET was the initial backbone of the internet which was created by the Department of Defense
+- packet switching: grouping data into packets that are transmitted over a digital network (with a header and payload)
+- metaphor: header = envelope, payload = contents inside envelope
+- response is a promise because it takes time for information to travel from wherever it originated, that's why I always say "we wait for the response to be fulfilled"
+</aside>
 
 ---
 
-## Request Reponse Cycle
+## WWW: World Wide Web
 
-👀 What is the request-response cycle?
+- Web resources accessed via HTTP (HyperText Transfer Protocol)
 
----
-
-## Request Reponse Cycle
-
-<img src="https://www.oreilly.com/api/v2/epubs/9780596802462/files/images/ugae_0104.png"/>
-
-- client makes request to server which may contain additional data
-- server responds with information which my contain data or an error
-- client waits for response (as a promise)
-
----
-
-## Client
-- user interface
-- responsible for styling, layout, event functionality
-- lightweight and loads fast
-- acts as a template for dynamic data
-- makes request to a web server using HTTP protocols
-
----
-
-## Web Server
-- responsible for data storage and management
-- changes in data may be triggered by the client but the actual change is handled by the server side
-- sends a rewsponse back to the client
-- uses HTTP proto cols to respond to requests
-
----
-
-## API (Application Programming Interface)
-
-- APIs
-    - tools, including libraries, functions, methodsused for building server applications
-    - not specific to web dev
-- Web APIs
-    - specific to interfacing with the web
-    - used to build out functionality with web browsers and web servers
-
----
-
-## URL Example
-
-EX
-- https://pokeapi.co/api/v2/pokemon/ditto
-https - protocol
-pokeapi.co - domain name
-api/v2/pokemon/ditto - path
 
 ---
 
@@ -121,7 +58,7 @@ api/v2/pokemon/ditto - path
 - Designed in the early 90s
 - Stateless: one request doesn't know about the next
 - Sessions: share info b/w requests by storing user info on the server
-    - Sessions usually expire over a certain period of time
+<aside class="notes"> sessions usually expire over a certain period of time </aside>
 - Cookies: saved in the user's browser and saves users identity (usually anonymously)...this also expires over a certain period of time
 
 <img src="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview/fetching_a_page.png" width="900px"/>
@@ -141,6 +78,64 @@ HTTP is the protocol describing the structure between client and server communic
 - IMAP (internet message access protocol)
 - DNS (domain name system) 
 etc ... 
+
+<aside class="notes">
+- ssl: establishes encrypted link between server and client
+- imap: stores emails on a mail server 
+- dns: domain names database - this is why hosting a website and hosting the domain name happen in two different places
+</aside>
+
+---
+
+## Static vs Dynamic Website
+
+- static website (doesn't change) is just HTML, CSS JS, almost acts as template for dynamic data coming into these pages
+
+<img src="https://rochester.kidsoutandabout.com/sites/default/files/html_css_javascript.jpeg" width="600px" />
+
+- dynamic software content is supplied by server.  a user makes a request, and the server sends back a response
+
+<aside class="notes">
+- websites (single domain pages on the web)
+- web apps (software accessible through the web)
+</aside>
+
+---
+
+## Request Reponse Cycle
+
+👀 What is the request-response cycle?
+
+---
+
+## Request Reponse Cycle
+
+<img src="https://www.oreilly.com/api/v2/epubs/9780596802462/files/images/ugae_0104.png"/>
+
+- client makes request to server which may contain additional data
+- server responds with information which my contain data or an error
+- client waits for response (as a promise)
+
+<aside class="notes">
+- this goes back to the transferring of data packets
+- response is a promise because it takes time for information to travel from wherever it originated, that's why I always say "we wait for the response"
+</aside>
+
+---
+
+## URL Example
+
+- https://pokeapi.co/api/v2/pokemon/ditto <br /> <br />
+https - protocol <br />
+pokeapi.co - domain name <br />
+api/v2/pokemon/ditto - path
+
+<aside class="notes">
+- use an example from github where you change the user who owns the repo, the branch name, etc.
+- semantic ui github: https://github.com/Semantic-Org/Semantic-UI
+- use an example by having a student's fork of repo and changing URL to navigate to my repo
+- display wikipedia (they have search query)
+</aside>
 
 ---
 
@@ -207,29 +202,39 @@ etc ...
 
 ## Flask
 
-- used to build web apps
-- written in python
-- easy to extend core (flask doesn't start with an ORM like SQLAlchemy)
-    - flask SQLAlchemy
-- WSGI
-    - web server gateway interface
-    - interface between web servers and apps
-- Werkzeug
-    - toolkit that implements requests, response objects and other utility functions
-    - debugger, classes to build requests and process responses, routing, making dev server
-- Flask provides a development WSGI through Werkzeug with `flask run`
-
 ---
+
 ## Why Flask
+
 - built in debugger
 - easily scalable
 - secure cookies
 - unit testing support
-- easy to learn, straightforward
 - lots of extensions
 - small codebase - lots of control for developers
 
+<aside class="notes">
+- easy to extend core: flask has a lot of packages to add on, flask itself is very lightweight
+</aside>
+
 ---
+
+## Why Flask 
+
+- WSGI (WIZ-ghee): web server gateway interface
+    - interface between web servers (Apache, Nginx, local development server) and web apps
+    - specifically for Python frameworks
+- Werkzeug: WSGI library
+    - toolkit that implements requests, response objects and other utility functions
+    - debugger, classes to build requests and process responses, routing, making dev server
+- Flask provides a development WSGI through Werkzeug with `flask run` command
+
+<aside class="notes">
+- web apps are software accessed/ran via internet
+</aside>
+
+---
+
 ## Initializing a Flask App
 
 ```js
@@ -264,9 +269,14 @@ db = SQLALchemy(app)
 ## Flask-SQLAlchemy [Configuration Keys](https://flask-sqlalchemy.palletsprojects.com/en/2.x/config/)
 
 - There are a few other configuration keys such as...
+<br />
 
 `SQLALCHEMY_RECORD_QUERIES`: setting to record queries
+<br />
+
 `SQLALCHEMY_POOL_TIMEOUT`: speicfies connection timeout in seconds
+<br />
+
 `SQLALCHEMY_ECHO`: SQLAlchemy will log all errors if set to True
 
 ---
@@ -316,6 +326,7 @@ def run_before():
 ## Debugging
 
 `import ipdb; ipdb.set_trace()`
+
 <br />
 
-`@app.before_request`
+`flask run --debug`
