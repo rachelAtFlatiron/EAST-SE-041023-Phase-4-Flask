@@ -1,79 +1,99 @@
-# Phase 4 - Flask
+# Intro to Flask: Deliverables
 
-## Phase Level Objectives
+### 1. In `models.py` create a Production Model 
+#### - Use the tablename `productions`
+#### - Include columns title: string, genre: string, budget:float, image:string,director: string, description:string, ongoing:boolean, created_at:date time, updated_at: date time 
 
-- Build and run a Flask application
-- Create a REST API capable of interacting with a client
-- Specify requirements and structure of incoming and outgoing data
+<br />
 
+---
 
-| Lecture | Notes | Videos | Starter | Solution |
-| ------- | :---: | ------ | ------- | -------- |
-| 1. Intro To Flask | [Notes](https://docs.google.com/document/d/1w8sYq3sZDyl79ukfz2ALCFyOD6dpGVoTWfZa0V--dU0/edit?usp=sharing) | Video | Starter | Solution |
-| 2. Rest APIs with Flask pt1 | Notes | Video | Starter | Solution |
-| 3. Rest APIs with Flask pt2  | Notes | Video | Starter | Solution |     |
-| 4. Client Server Communication  | Notes | Video | Starter | Solution |
-| 5. Auth pt1  | Notes | Video | Starter | Solution |
-| 6. Auth pt2  | Notes | Video | Starter | Solution |
-| 7. Deployment  | Notes | Video | Starter | Solution |
+<br />
 
-***
-## 1: Intro to Flask
-### SWBATs:
-- [ ] Understand how the Internet works
-- [ ] Understand how the request-response cycle works
-- [ ] Understand HTTP protocols
-- [ ] Intialize a Flask application
-- [ ] Understand how to use SQLAlchemy within Flask
-- [ ] Use Flask routing and create views
-- [ ] Use the Flask shell 
+### 2. Set up a flask app in `app.py`
+#### 2a. In `app.py` import flask, migrate, db, and the Production model
+#### 2b. Create an instance of a flask app
+#### 2c. Configure the flask app to connect to a database 
+#### 2d. Connect app to db with `Migrate`
+#### 2e. Initialize the app
 
-***
+<br />
 
-## 2: REST APIs with Flask pt1
-### SWBATs:
-- [ ] Explain the concept of REST and RESTful naming conventions
-- [ ] Build and execute a GET and POST request
-- [ ] Use Postman to interact with Flask
-- [ ] Use serializers
+---
 
-***
+<br />
 
-## 3: REST APIs with Flask pt2 
-### SWBATs:
-- [ ] Build and execute a PATCH and DELETE request 
-- [ ] Discuss the importance of handling exceptions
-- [ ] Handle exceptions
-- [ ] Use Flask validations
+### 3. Migrate the `Production` model using flask
 
-***
+<br />
 
-## 4. Client Server Communication
-### SWBATS:
-- [ ] Discuss MVC architecture
-- [ ] Connect a React app to a Flask API
-- [ ] Execute requests from React
-- [ ] Handle errors in React
-- [ ] Discuss CORS
+---
 
-***
+<br />
 
-## 5: Authentication pt1
-### SWBATs:
-- [ ] Discuss the importance of authentication in web apps
-- [ ] Explain the difference between authentication and authorization
-- [ ] Discuss the relationship between cookies and sessions
-- [ ] Use token-based authentication using cookies and sessions
+### 4. Create a `seed.py` file
+#### 4a. Import app, db, and models
+#### 4b. Create application context 
+#### 4c. Delete all existing records before reseeding
+#### 4d. Create some seeds and commit them to the database
 
-*** 
+<br />
 
-## 6: Authentication pt 2
-### SWBATs:
-- [ ] Use authorization 
-- [ ] Handle authorization errors on the front end 
+---
 
-***
+<br />
 
-## 7: Deployment
-### SWBATs:
-- [ ] Deploy an app using [Render](https://render.com/)
+### 5. Run flask shell and query Production to check seeds
+
+<br />
+
+---
+
+<br />
+
+### 6. Create a `/` route which will return a view with  `<h1>Hello World!</h1>`
+#### 6a. Run the server with `flask run --debug` to verify the route in the browser
+
+<br />
+
+---
+
+<br />
+
+### 7. Create a `/longest-movies` route to retrieve the first 5 longest movies
+#### 7a. Import `jsonify` and `make_response`
+#### 7b. Use the `route()` decorator
+#### 7c. Query for the top 5 longest movies
+#### 7d. Jsonify and return the response
+
+<br />
+
+---
+
+<br />
+
+### 8. Create a dynamic route `/productions/<string:title>` that searches for all matching records
+#### 8a. Use the `route()` decorator
+#### 8b. Create a function `def production()` that filters through all Production records and returns the appropriate one
+#### 8c. Return the result as json
+
+<br />
+
+---
+
+<br />
+
+### 9. Use `ipdb` to view request context
+#### 9a. Inside the `production()` function, run `import ipdb; ipdb.set_trace()`
+#### 9b. Visit the route and check out the console!
+
+<br />
+
+---
+
+<br />
+
+### 10. Use the before_request request hook, what this hook does is up to you.
+#### - Use the decorator: `@app.before_request`
+#### - Create a function `def runs_before()` that prints `Hello World`
+#### - Visit a few routes!
