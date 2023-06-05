@@ -1,79 +1,78 @@
-# Phase 4 - Flask
+# REST APIs with Flask: Deliverables
 
-## Phase Level Objectives
+### 1. Review: Serializer
+#### 1a. Review `Actor` class in `models.py` and the relationships 
 
-- Build and run a Flask application
-- Create a REST API capable of interacting with a client
-- Specify requirements and structure of incoming and outgoing data
+<br />
+
+---
+
+<br />
+
+`production` -> `roles` <- `actors`
+#### 1b. Set up the database and run `seed.py`
+#### 1c. Write the serializer rules to prevent max recursion
+
+<br />
+
+---
+
+<br />
 
 
-| Lecture | Notes | Videos | Starter | Solution |
-| ------- | :---: | ------ | ------- | -------- |
-| 1. Intro To Flask | [Notes](https://docs.google.com/document/d/1w8sYq3sZDyl79ukfz2ALCFyOD6dpGVoTWfZa0V--dU0/edit?usp=sharing) | Video | Starter | Solution |
-| 2. Rest APIs with Flask pt1 | Notes | Video | Starter | Solution |
-| 3. Rest APIs with Flask pt2  | Notes | Video | Starter | Solution |     |
-| 4. Client Server Communication  | Notes | Video | Starter | Solution |
-| 5. Auth pt1  | Notes | Video | Starter | Solution |
-| 6. Auth pt2  | Notes | Video | Starter | Solution |
-| 7. Deployment  | Notes | Video | Starter | Solution |
+### 2. Use `Flask-RESTful` to write `GET` and `POST` routes for `Roles`.
+#### 2a. Import `Api` and `Resource` from flask-restful.
+#### 2b. Create an instance of an `Api`
 
-***
-## 1: Intro to Flask
-### SWBATs:
-- [ ] Understand how the Internet works
-- [ ] Understand how the request-response cycle works
-- [ ] Understand HTTP protocols
-- [ ] Intialize a Flask application
-- [ ] Understand how to use SQLAlchemy within Flask
-- [ ] Use Flask routing and create views
-- [ ] Use the Flask shell 
+<br />
 
-***
+---
 
-## 2: REST APIs with Flask pt1
-### SWBATs:
-- [ ] Explain the concept of REST and RESTful naming conventions
-- [ ] Build and execute a GET and POST request
-- [ ] Use Postman to interact with Flask
-- [ ] Use serializers
+<br />
 
-***
+### 3. Create the route GET `/roles` using flask restful
+#### 3a. Create a `Resource` for `Roles`
+#### 3b. Create a view method that returns all roles from the database
+#### 3c. Update `to_dict()` so that it only returns `role_name`, the actor's name, and the production's name
+#### 3d. Create an Api endpoint for the `Roles` `Resource`
 
-## 3: REST APIs with Flask pt2 
-### SWBATs:
-- [ ] Build and execute a PATCH and DELETE request 
-- [ ] Discuss the importance of handling exceptions
-- [ ] Handle exceptions
-- [ ] Use Flask validations
+<br />
 
-***
+---
 
-## 4. Client Server Communication
-### SWBATS:
-- [ ] Discuss MVC architecture
-- [ ] Connect a React app to a Flask API
-- [ ] Execute requests from React
-- [ ] Handle errors in React
-- [ ] Discuss CORS
+<br />
 
-***
+### 4. Create the route POST `/roles`
+#### 4a. Create the view method for a POST
 
-## 5: Authentication pt1
-### SWBATs:
-- [ ] Discuss the importance of authentication in web apps
-- [ ] Explain the difference between authentication and authorization
-- [ ] Discuss the relationship between cookies and sessions
-- [ ] Use token-based authentication using cookies and sessions
+<br />
 
-*** 
+---
 
-## 6: Authentication pt 2
-### SWBATs:
-- [ ] Use authorization 
-- [ ] Handle authorization errors on the front end 
+<br />
 
-***
+### 5. Create a resource for `/roles/:id`
+#### 5a. Create a `Resource` for `One_Role`
+#### 5b. Create a view method for GET
+#### 5c. Create a view method for DELETE
+#### 5d. Create an Api endpoint for the resource
 
-## 7: Deployment
-### SWBATs:
-- [ ] Deploy an app using [Render](https://render.com/)
+<br />
+
+---
+
+<br />
+
+### 6. Add a view for PATCH `/roles/:id`
+#### 6a. Get the matching query from the database
+#### 6b. Iterate over available attributes from request
+#### 6c. Using `setattr`, update the appropriate key/value pairs in the matching query
+#### 6d. Add and commit the updated object to the database
+
+<br />
+
+---
+
+<br />
+
+## You Do: CRUD for `/actors`
