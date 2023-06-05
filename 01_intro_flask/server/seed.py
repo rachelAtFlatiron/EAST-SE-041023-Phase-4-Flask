@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# 🛑 make sure to use single-word titles for /productions/<str:title>
 
 # 4a. Imports
 from app import app
