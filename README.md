@@ -19,6 +19,7 @@
 | 8. Deployment  | Notes | Video | Starter | Solution |
 
 ***
+
 ## 1: Intro to Flask
 ### SWBATs:
 - [ ] Understand how the Internet works
