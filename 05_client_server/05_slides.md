@@ -1,10 +1,16 @@
+---
 
+title: 05_client_server
 
+---
+
+# Client-Server Communications
+
+---
 
 ## `Gunicorn` and `Honcho`
 
 - run flask AND react at same time instead of opening up two different terminals:
-- `honcho` and `gunicorn`
 - `Procfile.dev` to create scripts making use of `honcho` and `gunicorn`
 
 - `gunicorn` Python WGI HTTP server
@@ -19,32 +25,21 @@ worker: <For job queues>
 
 ```
 
-
-## Validations
-
-- validations run when we try to create our object before we save to db
-
-## Constraints
-
-
-- constraint will run after we try to save to db
-- best to use them in combo
-
-
-## `try...except...`
-
-- these exceptions will give you a 500 by default
-- to specify what's going on....
-- use a `try...except...`
-- on `except` raise error
+---
 
 ## `CORS`
+
+---
 
 ## Formik and yup
 - `Formik`: npm package that makes writing React forms easier
 - `yup`: npm package for object schema validation
 
-- NOTE: Flask-WTForm and WTForms are for Python view templates
+<aside class="notes">
+NOTE: Flask-WTForm and WTForms are for Python view templates
+</aside>
+
+---
 
 ## yup
 You can...
@@ -58,9 +53,26 @@ You can...
 
 ## Displaying errors
 
-```js
+```python
 {touched.username && errors.username && <div>{errors.username}</div>}
            <Field name="email" />
 ```
 
-## async/await
+## Formik errors
+
+```python
+{formik.touched.field && formik.errors.field ? <h3>{formik.errors.field}</h3> : ''}
+```
+
+<strong>Note:</strong> you need to have an onblur event in order for `formik.touched` to get populated 
+
+```python
+<label>Field</label>
+<input
+    type="number"
+    name="field"
+    value={formik.values.field}
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+/>
+```

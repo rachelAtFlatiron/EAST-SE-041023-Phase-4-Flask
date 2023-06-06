@@ -226,7 +226,7 @@ api/v2/pokemon/ditto - path
 
 ## Initializing a Flask App
 
-```js
+```python
 app = Flask('mynameiswhat')
 ```
 
@@ -238,18 +238,18 @@ That's it!
 
 1. configure the database path you want a connection with
 - database path is referred to as URI = Uniform Resource Identifier
-```js
+```python
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///path/to/db.db'
 ```
 2. configure whether SQLAlchemy should track modifications to objects (inserts, updates, etc.)
-```js
+```python
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 ```
 - this will use less memory
 - we may get an error if we don't have this set
 
 3. create an instance of the db 
-```js
+```python
 db = SQLALchemy(app)
 ```
 
@@ -274,7 +274,7 @@ db = SQLALchemy(app)
 
 Use a decorator!
 
-```js
+```python
 @app.route('/', methods=['GET', 'POST', ...])
 def home():
     if request.method == 'GET':
@@ -296,7 +296,7 @@ def home():
 `@app.after_request`
 and more!...
 
-```js
+```python
 @app.before_request
 def run_before():
     print('this is really useful when checking if a user is logged in')

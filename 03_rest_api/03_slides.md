@@ -1,77 +1,97 @@
 ---
 
-title: '03_rest_api_two'
+title: '03_rest_api'
 
 ---
 
-# Flask APIs Part Two
+# Flask REST 
 
 ---
 
-## Werkzeug HTTPException
+## Flask-RESTful
 
-- automatically properly serialized
+- an extension for Flask that adds support for building APIs
+- `json-server` was a fake RESTful server
 
-```python
-from werkzeug.exceptions import BadRequest
-raise BadRequest(<optional: custom message>)
-```
-- you can add other custom attributes
+| HTTP Verb 	|       Path       	| Description        	|
+|-----------	|:----------------:	|--------------------	|
+| GET       	|   /productions   	| READ all resources 	|
+| GET       	| /productions/:id 	| READ one resource   	|
+| POST      	|   /productions   	| CREATE one resource 	|
+| PATCH/PUT 	| /productions/:id 	| UPDATE one resource	|
+| DELETE    	| /productions/:id 	| DESTROY one resource 	|
 
-```python
-e = BadRequest('blah')
-e.data = {'custom': 'test'}
-raise e
-```
+- we use the RESTful methodology so that there is a standard 
+
 ---
 
-## abort()
+## Configuring endpoints
 
-- uses Werkzeug HTTPException and will be wrapped in it such that this exception will also be automatically serialized
-- abort(): gives ability to give status code and message
-- it also cancels our submission to the database?
-
-```js
-@app.route('/')
-def hello():
-    abort(404, "not found")
-    return "hello"
+The default flask way:
+```python
+@app.route('/endpoint', methods=["GET", "POST"])
+def records():
+    if request.method == 'GET':
+        print('do stuff')
 ```
 
---- 
-
-## @api.errorhandler(SomeException)
-
-- you can write a bunch of lines of code
-
-
-## You can redirect
-
-`Flask.redirect(location, statuscode, response)`
-
-- location: URL to redirect to
-- statuscode: sent to browser
-- response: create response
-
+The `restful_flask` package way:
 ```python
-try:
-    ...
-except Exception, e:
-    raise SomeError('oops')
-
-@app.route('/foo')
-def foo():
-    ...
+api.add_resource(CLASSNAME, '/endpoint')
 ```
 
 ---
 
-## You can add custom headers
+## Using Flask RESTful
+
+- we don't need @app.route decorator
+- instead we create a method that represents each route method (GET, POST, etc.)
+
 
 ```python
-@api.errorhandler(SomeException)
-@api.header('My-Header',  'Some description')
-def handle_fake_exception_with_header(error):
-    '''This is a custom error'''
-    return {'message': error.message}, 400, {'My-Header': 'Value'}
+from flask_restful import Api, Resource
+
+class MyModel(Resource):
+    def get(self):
+        print('get all records')
+    
+    def post(self):
+        print('save a record')
+
+//this is how we tell the class what path to use
+api.add_resource(MyModel, '/my-model')
+
 ```
+
+---
+
+## Why flask-restful instead of the default way?
+
+- You may write routes not included with RESTful routing such as login, alerts, checks and balances, etc.
+
+- If so you will have to use the default way
+
+---
+
+## Getting JSON from the request
+
+- It all depends on the content type passed into the request
+
+---
+
+- `request.form`: key/value pairs in the HTML POST form that isn't JSON encoded
+- `request.form['key']` if key definitely exists
+- `request.form.get('key')` if key may not exist
+
+---
+
+- `request.values`: multipurpose for args and form, especially if they overlap
+
+---
+
+- ➡️ `request.get_json()`: parse json data ⬅️
+
+---
+
+- `request.args`: key value pairs in the URL query string
+<img src='https://static.semrush.com/blog/uploads/media/00/6e/006eebc38b54220916caecfc80fed202/Guide-to-URL-Parameters-2.png' width="500px">

@@ -1,0 +1,144 @@
+---
+
+title: '02_flask_routes'
+
+---
+
+# Serializers
+
+---
+
+## SerializerMixin
+
+Having to write this again and again is annoying:
+
+```python
+for production in query:
+    prods_list.append({
+        "title": production.title,
+        "genre": production.genre,
+        "length": production.length
+    })
+```
+
+---
+
+## SerializerMixin
+
+- Luckily we have `SerializerMixin`.
+- We use `SerializerMixin` to automatically turn instances of our models into dictionaries:
+
+```python
+prods_list = []
+for production in query:
+    prods_list.append(production.to_dict())
+```
+
+- or even shorter...
+
+```python
+prods_list = [production.to_dict() for production in query]
+```
+
+---
+
+## SerializerMixin
+
+- Allows you to write rules on what fields to include in your response
+- Especially helpful when you need to make use of relationships
+
+```python
+from sqlalchemy_serializer import SerializerMixin
+from app import db
+
+class SomeModel(db.Model, SerializerMixin)
+```
+
+- An easy way to serialize JSON for GET from db and for PUT/POST/PATCH/etc. from client.
+
+
+---
+
+
+## Creating JSON responses
+
+`json.dumps()` vs `jsonify()` vs `to_dict()`
+- `json.dumps()` does not automatically add an application/json header, and you need to provide how to serialize 
+- `jsonify()` will add the header for you, and you need to provide how to serialize
+- `to_dict()` is enabled by flask-serialize
+
+---
+
+
+## Serializer Rules
+
+`serialize_only()` will include ONLY the exact specified fields
+`serialize_rules()` is the negative to `serialize_only()` (so don't forget the `-`)
+
+---
+
+## Serializer Rules
+
+```python
+only_result = item.to_dict(only=('field_one', 'field_two'))
+rules_result = item.to_dict(rules=('-field_one', '-field_two'))
+```
+
+OR
+
+```python
+serialize_only = ('field_one', 'field_two')
+serialize_rules = ('-field_one', '-field_two')
+```
+
+---
+
+## Max Recursion
+
+- When creating a many-to-many relationship we may reach a max-recursion depth 
+- For example with Actor -< Role >- Films if we try to serialize Actor we may get
+```python
+{
+    id: 1,
+    name: 'Richard',
+    films: [
+        {
+            id: 1,
+            title: 'Where\'s Richard?',
+            actors: [
+                {
+                    id: 1,
+                    name: 'Richard',
+                    films: [
+                        {
+                            //more films...and actors...and films...
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+```
+
+---
+
+## Max Recursion
+
+- To avoid this we have to specify where to stop using `serialize_rules(-films.actors)`
+
+```python
+{
+    id: 1,
+    name: 'Richard',
+    films: [
+        {
+            id: 1,
+            title: 'Where\'s Richard?'
+            //no more actors!
+        }
+    ]
+}
+
+```
