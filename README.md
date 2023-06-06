@@ -1,79 +1,81 @@
-# Phase 4 - Flask
+# Auth Part Two: Deliverables
 
-## Phase Level Objectives
+### 1. Include Bcrypt
+#### 1a. `pipenv install flask-bcrypt`
+#### 1b. In `app.py` import `Bcrypt` from `flask-bcrypt`
+#### 1c. Pass `app` to `Bcrypt`
+#### 1d. In `models.py` import `bcrypt` from `app`
 
-- Build and run a Flask application
-- Create a REST API capable of interacting with a client
-- Specify requirements and structure of incoming and outgoing data
+<br />
 
+---
 
-| Lecture | Notes | Videos | Starter | Solution |
-| ------- | :---: | ------ | ------- | -------- |
-| 1. Intro To Flask | [Notes](https://docs.google.com/document/d/1w8sYq3sZDyl79ukfz2ALCFyOD6dpGVoTWfZa0V--dU0/edit?usp=sharing) | Video | Starter | Solution |
-| 2. Rest APIs with Flask pt1 | Notes | Video | Starter | Solution |
-| 3. Rest APIs with Flask pt2  | Notes | Video | Starter | Solution |     |
-| 4. Client Server Communication  | Notes | Video | Starter | Solution |
-| 5. Auth pt1  | Notes | Video | Starter | Solution |
-| 6. Auth pt2  | Notes | Video | Starter | Solution |
-| 7. Deployment  | Notes | Video | Starter | Solution |
+<br />
 
-***
-## 1: Intro to Flask
-### SWBATs:
-- [ ] Understand how the Internet works
-- [ ] Understand how the request-response cycle works
-- [ ] Understand HTTP protocols
-- [ ] Intialize a Flask application
-- [ ] Understand how to use SQLAlchemy within Flask
-- [ ] Use Flask routing and create views
-- [ ] Use the Flask shell 
+### 2. Add a password column to `Users`
+#### 2a. Add column `_password_hash` of type string
+#### 2b. Add an `admin` column of type string and default set to `False`
 
-***
+<br />
 
-## 2: REST APIs with Flask pt1
-### SWBATs:
-- [ ] Explain the concept of REST and RESTful naming conventions
-- [ ] Build and execute a GET and POST request
-- [ ] Use Postman to interact with Flask
-- [ ] Use serializers
+---
 
-***
+<br />
 
-## 3: REST APIs with Flask pt2 
-### SWBATs:
-- [ ] Build and execute a PATCH and DELETE request 
-- [ ] Discuss the importance of handling exceptions
-- [ ] Handle exceptions
-- [ ] Use Flask validations
+### 3. Create a hybrid property `password_hash`
 
-***
+<br />
 
-## 4. Client Server Communication
-### SWBATS:
-- [ ] Discuss MVC architecture
-- [ ] Connect a React app to a Flask API
-- [ ] Execute requests from React
-- [ ] Handle errors in React
-- [ ] Discuss CORS
+---
 
-***
+<br />
 
-## 5: Authentication pt1
-### SWBATs:
-- [ ] Discuss the importance of authentication in web apps
-- [ ] Explain the difference between authentication and authorization
-- [ ] Discuss the relationship between cookies and sessions
-- [ ] Use token-based authentication using cookies and sessions
+### 4. Create a password setter 
+#### 4a. Create the password setter so that it takes self and a password
+#### 4b. Use bcyrpt to generate the password hash with bcrypt.generate_password_hash
+#### 4c. Set the _password_hash to the hashed password  
 
-*** 
+<br />
 
-## 6: Authentication pt 2
-### SWBATs:
-- [ ] Use authorization 
-- [ ] Handle authorization errors on the front end 
+---
 
-***
+<br />
 
-## 7: Deployment
-### SWBATs:
-- [ ] Deploy an app using [Render](https://render.com/)
+### 5. Create a method to authenticate a hash
+#### 5a. Pass in self and password
+#### 5b. Use `bcrypt`'s `check_password_hash` to verify the password against the hash in the DB with  
+
+<br />
+
+---
+
+<br />
+
+### 6. In `app.py` create a `signup` route
+#### - NOTE: Removed `Users` resource and `/users` for creating users
+#### 6a. Create a `Signup` resource and add it to the route `/signup`
+#### 6b. Hash the given password and save it to `_password_hash`
+#### 6c. Don't forget to save the `user_id` in `session`!
+
+<br />
+
+---
+
+<br />
+
+### 7. Update the `Login` resource to use a `try...except`
+#### 7a. Check if user exists
+#### 7b. Check if password is authentic using the `authenticate` method defined in `models.py`
+#### 7c. Set `session`'s `user_id` and send a response
+#### 7d. Otherwise send an error message
+
+<br />
+
+---
+
+<br />
+
+### 8. Create an error message for the user if their credentials are invalid
+#### 8a. In `Auth.js` create a state `error`
+#### 8b. If `formik`'s `onSubmit` throws on error, set error state with the message
+#### 8c. Use conditional rendering to display the error on the form on an unsuccessful sign up/log in
