@@ -1,79 +1,86 @@
-# Phase 4 - Flask
+# Client Server Communication: Deliverables
 
-## Phase Level Objectives
+### 1. Use gunicorn to start the client and server
+#### 1a. Install `gunicorn`, `honcho`
+#### 1b. Create a `Procfile.dev` file and write:
+```js
+web: PORT=3000 npm start --prefix client
+api: gunicorn -b 127.0.0.1:5555 --chdir ./server
+```
+#### 1c. In terminal run `honcho start -f Procfile.dev`
 
-- Build and run a Flask application
-- Create a REST API capable of interacting with a client
-- Specify requirements and structure of incoming and outgoing data
+<br />
 
+---
 
-| Lecture | Notes | Videos | Starter | Solution |
-| ------- | :---: | ------ | ------- | -------- |
-| 1. Intro To Flask | [Notes](https://docs.google.com/document/d/1w8sYq3sZDyl79ukfz2ALCFyOD6dpGVoTWfZa0V--dU0/edit?usp=sharing) | Video | Starter | Solution |
-| 2. Rest APIs with Flask pt1 | Notes | Video | Starter | Solution |
-| 3. Rest APIs with Flask pt2  | Notes | Video | Starter | Solution |     |
-| 4. Client Server Communication  | Notes | Video | Starter | Solution |
-| 5. Auth pt1  | Notes | Video | Starter | Solution |
-| 6. Auth pt2  | Notes | Video | Starter | Solution |
-| 7. Deployment  | Notes | Video | Starter | Solution |
+<br />
 
-***
-## 1: Intro to Flask
-### SWBATs:
-- [ ] Understand how the Internet works
-- [ ] Understand how the request-response cycle works
-- [ ] Understand HTTP protocols
-- [ ] Intialize a Flask application
-- [ ] Understand how to use SQLAlchemy within Flask
-- [ ] Use Flask routing and create views
-- [ ] Use the Flask shell 
+### 2. In `Home.js` get the longest movies and display it on the page
+#### - Review `/longest-movies` in `app.py`
+#### 2a. Create a state for longest movies in `Home.js`
+#### 2b. Use `useEffect` to fetch `/longest-movies` and update state
 
-***
+<br />
 
-## 2: REST APIs with Flask pt1
-### SWBATs:
-- [ ] Explain the concept of REST and RESTful naming conventions
-- [ ] Build and execute a GET and POST request
-- [ ] Use Postman to interact with Flask
-- [ ] Use serializers
+---
 
-***
+<br />
 
-## 3: REST APIs with Flask pt2 
-### SWBATs:
-- [ ] Build and execute a PATCH and DELETE request 
-- [ ] Discuss the importance of handling exceptions
-- [ ] Handle exceptions
-- [ ] Use Flask validations
+### 3. Use a fetch request to get actors and productions on the page
+#### 3a. Create a `useEffect` in `App.js` to fetch from `/productions` and `/actors`
+#### 3b. Save the result in state
+#### 3c. Pass it down to `<ActorContainer />` and `<ProductionContainer />`
 
-***
+<br />
 
-## 4. Client Server Communication
-### SWBATS:
-- [ ] Discuss MVC architecture
-- [ ] Connect a React app to a Flask API
-- [ ] Execute requests from React
-- [ ] Handle errors in React
-- [ ] Discuss CORS
+---
 
-***
+<br />
 
-## 5: Authentication pt1
-### SWBATs:
-- [ ] Discuss the importance of authentication in web apps
-- [ ] Explain the difference between authentication and authorization
-- [ ] Discuss the relationship between cookies and sessions
-- [ ] Use token-based authentication using cookies and sessions
+### 4. In `ProductionDetail.js` and `ActorDetail.js`
+#### 4a. Fetch the current `production` and `actor` based on the url params
+#### 4b. Destructure the values and display them on the page
+#### 4c. If the response throws and error, redirect to the `/not-found` client route
 
-*** 
+<br />
 
-## 6: Authentication pt 2
-### SWBATs:
-- [ ] Use authorization 
-- [ ] Handle authorization errors on the front end 
+---
 
-***
+<br />
 
-## 7: Deployment
-### SWBATs:
-- [ ] Deploy an app using [Render](https://render.com/)
+### 5. Use `formik` and `yup` to create a `ProductionForm`
+#### 5a. Import `useFormik` and `yup`
+#### 5b. Create a schema of constraints for the `ProductionForm` using `yup`
+#### 5c. Create a `formik` instance containing:
+#### - The initial values of the form
+#### - The validation schema
+#### - A `handleSubmit` callback
+
+<br />
+
+---
+
+<br />
+
+### 6. Attach the `formik` instance to the JSX
+#### 6a. In the form's `onSubmit` event pass in the `formik.handleSubmit` callback
+#### 6b. In the inputs' `onChange` event pass in the `formik.handleChange` callback
+#### 6c. In the inputs' values pass in `formik.values.key` 
+
+<br />
+
+---
+
+<br />
+
+### 7. Make use of `formik`'s errors
+#### 7a. Add an `onBlur` event to allow the ability to update `formik.touched`
+#### 7b. Use `formik.touched` and `formik.errors` to conditionally render errors below appropriate forms.
+
+<br />
+
+---
+
+<br />
+
+### 8. [You Do] Use `formik` and `yup` to create a form in `ActorForm`
