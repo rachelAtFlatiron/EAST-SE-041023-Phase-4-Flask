@@ -10,7 +10,7 @@ title: '01_intro_flask'
 
 ## What We'll Be Doing
 
-- Using Flask to create a Web API
+- Using Flask to create a REST API
 
 <aside class="notes">
 - front-end communicate with back-end <br />
