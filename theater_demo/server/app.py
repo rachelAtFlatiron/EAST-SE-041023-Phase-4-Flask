@@ -17,10 +17,10 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False 
 
-# 2d. Connect app to db with Migrate
+# 2d. Enable Alembic by using `Migrate`
 migrate = Migrate(app, db)
 
-# 2e. Initialize the app
+# 2e. Connect the database to the app
 db.init_app(app)
 
 # 3. Migrate the Production model
