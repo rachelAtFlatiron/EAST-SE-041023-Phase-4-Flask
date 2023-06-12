@@ -24,10 +24,10 @@
 # 6. Create a / route that returns Hello World
 # 6a. Run `flask run --debug` to check if its in the browser
 
-#7. Create a path to retrieve the first 5 longest movies
+#7. Create a path to retrieve the longest movie
 # 7a. Import jsonify, make_response
 # 7b. Use the `route` decorator
-    # 7c. Query for the top 5 longest movies
+    # 7c. Query for the longest movie
     # 7d. Jsonify and return the response
 
 # 8. Create a dynamic route
