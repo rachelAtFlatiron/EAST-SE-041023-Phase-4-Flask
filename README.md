@@ -14,8 +14,8 @@
 #### 2a. In `app.py` import flask, migrate, db, and the Production model
 #### 2b. Create an instance of a flask app
 #### 2c. Configure the flask app to connect to a database 
-#### 2d. Connect app to db with `Migrate`
-#### 2e. Initialize the app
+#### 2d. Configure Flask-SQLAlchemy and Flask to work with Alembic by using `Migrate`
+#### 2e. Connect the db to the app
 
 <br />
 

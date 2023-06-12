@@ -5,8 +5,8 @@
 # 2a. Set Up Imports
 # 2b. Create instance of Flask
 # 2c. Configure the flask app to connect to a database
-# 2d. Connect app to db with Migrate
-# 2e. Initialize the app
+# 2d. Enable Alembic by using `Migrate`
+# 2e. Connect the db to the app
 
 
 # 3. Migrate the Production model
