@@ -8,16 +8,15 @@ title: '01_intro_flask'
 
 ---
 
-## What is The Internet
+## What We'll Be Doing
 
-- Architecture 
-- Connects networks across the Earth
-- Ocean cables 
-- Computers
-- Data Centers
-- Servers
-- Sattelites
-- Wifi towers
+- Using Flask to create a Web API
+
+<aside class="notes">
+- front-end communicate with back-end <br />
+- json-server was a really basic API <br />
+- more complex APIs: data validation, authorization
+</aside>
 
 ---
 
@@ -26,9 +25,11 @@ title: '01_intro_flask'
 <img src='https://www.gao.gov/assets/extracts/726c56e9ccd46e3aaf3e4b7b75c60895/rId15_image3.png' width="800px" />
 
 <aside class="notes">
-Fun Fact: ARPANET was the initial backbone of the internet which was created by the Department of Defense
-- packet switching: grouping data into packets that are transmitted over a digital network (with a header and payload)
-- metaphor: header = envelope, payload = contents inside envelope
+- architecture, connect networks across the earth <br />
+- ocean cables, computers, data centers, server, satelites, wifi towers
+Fun Fact: ARPANET was the initial backbone of the internet which was created by the Department of Defense <br />
+- packet switching: grouping data into packets that are transmitted over a digital network (with a header and payload) <br />
+- metaphor: header = envelope, payload = contents inside envelope <br />
 - response is a promise because it takes time for information to travel from wherever it originated, that's why I always say "we wait for the response to be fulfilled"
 </aside>
 
@@ -44,15 +45,14 @@ Fun Fact: ARPANET was the initial backbone of the internet which was created by 
 ## HTTP Protocol
 
 - Hypertext Transfer Protocol
-- Designed in the early 90s
 - Stateless: one request doesn't know about the next
 - Sessions: share info b/w requests by storing user info on the server
-<aside class="notes"> sessions usually expire over a certain period of time </aside>
 - Cookies: saved in the user's browser and saves users identity (usually anonymously)...this also expires over a certain period of time
 
 <img src="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview/fetching_a_page.png" width="900px"/>
 
 <aside class="notes">
+- sessions usually expire over a certain period of time <br />
 What is a protocol? A set of rules on how something should be done.
 HTTP is the protocol describing the structure between client and server communication 
 </aside>
@@ -69,8 +69,8 @@ HTTP is the protocol describing the structure between client and server communic
 etc ... 
 
 <aside class="notes">
-- ssl: establishes encrypted link between server and client
-- imap: stores emails on a mail server 
+- ssl: establishes encrypted link between server and client <br />
+- imap: stores emails on a mail server  <br />
 - dns: domain names database - this is why hosting a website and hosting the domain name happen in two different places
 </aside>
 
@@ -78,14 +78,14 @@ etc ...
 
 ## Static vs Dynamic Website
 
-- static website (doesn't change) is just HTML, CSS JS, almost acts as template for dynamic data coming into these pages
+- static website (doesn't change) is HTML, CSS, JS that acts as template for dynamic data coming into these pages
 
 <img src="https://rochester.kidsoutandabout.com/sites/default/files/html_css_javascript.jpeg" width="600px" />
 
 - dynamic software content is supplied by server.  a user makes a request, and the server sends back a response
 
 <aside class="notes">
-- websites (single domain pages on the web)
+- websites (single domain pages on the web) <br />
 - web apps (software accessible through the web)
 </aside>
 
@@ -106,7 +106,7 @@ etc ...
 - client waits for response (as a promise)
 
 <aside class="notes">
-- this goes back to the transferring of data packets
+- this goes back to the transferring of data packets <br />
 - response is a promise because it takes time for information to travel from wherever it originated, that's why I always say "we wait for the response"
 </aside>
 
@@ -120,9 +120,9 @@ pokeapi.co - domain name <br />
 api/v2/pokemon/ditto - path
 
 <aside class="notes">
-- use an example from github where you change the user who owns the repo, the branch name, etc.
-- semantic ui github: https://github.com/Semantic-Org/Semantic-UI
-- use an example by having a student's fork of repo and changing URL to navigate to my repo
+- use an example from github where you change the user who owns the repo, the branch name, etc. <br />
+- semantic ui github: https://github.com/Semantic-Org/Semantic-UI <br />
+- use an example by having a student's fork of repo and changing URL to navigate to my repo <br />
 - display wikipedia (they have search query)
 </aside>
 
@@ -170,9 +170,14 @@ api/v2/pokemon/ditto - path
 
 ---
 
-## CRUD vs HTTP verbs
+## CRUD operations vs HTTP verbs
 
 <img src="https://www.atatus.com/blog/content/images/2022/12/crud-operations.png" width="500px" />
+
+<aside class="notes">
+- CRUD: for backend databases, primitive
+- HTTP/REST: method sent along with request, APIs
+</aside>
 
 ---
 
@@ -183,7 +188,7 @@ api/v2/pokemon/ditto - path
 - easy to read
 
 <aside class="notes">
-- It’s a format to transfer data from client to server
+- It’s a format to transfer data from client to server <br />
 - sometimes have to specify you will be sending JSON or expecting JSON
 </aside>
 
@@ -211,14 +216,18 @@ api/v2/pokemon/ditto - path
 ## Why Flask 
 
 - WSGI (WIZ-ghee): web server gateway interface
-    - interface between web servers (Apache, Nginx, local development server) and web apps
-    - specifically for Python frameworks
+
 - Werkzeug: WSGI library
-    - toolkit that implements requests, response objects and other utility functions
-    - debugger, classes to build requests and process responses, routing, making dev server
+    
 - Flask provides a development WSGI through Werkzeug with `flask run` command
 
 <aside class="notes">
+- WSGI <br />
+    - interface between web servers (Apache, Nginx, local development server) and web apps <br />
+    - specifically for Python frameworks <br />
+- Werkzeug:  <br />
+- toolkit that implements requests, response objects and other utility functions <br />
+    - debugger, classes to build requests and process responses, routing, making dev server <br />
 - web apps are software accessed/ran via internet
 </aside>
 
@@ -307,8 +316,27 @@ def run_before():
 
 ## Context
 
-- Application Context: Keeps track of config variables, logger, database connections so that we don't have to pass the entire application from function to function
-- Request Context: Keeps track of request data such as URL, headers, method, request data, etc.
+- Application Context: Keeps track of current app's config variables, logger, database connections so that we don't have to pass the entire application instance from function to function
+
+```python
+    with app.app_context():
+        # add seeds
+```
+
+- [Request Context](https://tedboy.github.io/flask/generated/generated/flask.Request.html): Keeps track of current request data such as URL, headers, method, request data, etc.
+
+```python
+
+from flask import request
+
+# request.method
+# request.get_json()
+# request.args
+# request.cookies
+# request.base_url
+# etc.
+
+```
 
 ---
 

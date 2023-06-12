@@ -4,7 +4,49 @@ title: '02_flask_routes'
 
 ---
 
-# Serializers
+# Flask Routes
+
+---
+
+## Getting JSON from the request
+
+- It all depends on the content type passed into the request
+
+---
+
+- `request.form`: key/value pairs in the HTML POST form that isn't JSON encoded
+- `request.form['key']` if key definitely exists
+- `request.form.get('key')` if key may not exist
+
+---
+
+- `request.values`: multipurpose for args and form, especially if they overlap
+
+---
+
+- ➡️ `request.get_json()`: parse json data ⬅️
+
+---
+
+- `request.args`: key value pairs in the URL query string
+<img src='https://static.semrush.com/blog/uploads/media/00/6e/006eebc38b54220916caecfc80fed202/Guide-to-URL-Parameters-2.png' width="500px">
+
+---
+
+## Creating JSON responses
+
+- `jsonify()`: adds header for JSON
+- `make_response()`: allows you to add custom headers
+
+<aside class="notes">
+- `json.dumps()` does not automatically add an application/json header, and you need to provide how to serialize 
+- `jsonify()` will add the header for you, and you need to provide how to serialize, you can return `jsonify()` immediately without `make_response`
+- `to_dict()` is enabled by flask-serialize
+- `make_response` allows you to add custom headers - mostly used for returning Flask views
+
+best way to do it is with `make_response(jsonify())` or just `jsonify()`
+</aside>
+
 
 ---
 
@@ -57,15 +99,6 @@ class SomeModel(db.Model, SerializerMixin)
 - An easy way to serialize JSON for GET from db and for PUT/POST/PATCH/etc. from client.
 
 
----
-
-
-## Creating JSON responses
-
-`json.dumps()` vs `jsonify()` vs `to_dict()`
-- `json.dumps()` does not automatically add an application/json header, and you need to provide how to serialize 
-- `jsonify()` will add the header for you, and you need to provide how to serialize
-- `to_dict()` is enabled by flask-serialize
 
 ---
 
@@ -126,7 +159,7 @@ serialize_rules = ('-field_one', '-field_two')
 
 ## Max Recursion
 
-- To avoid this we have to specify where to stop using `serialize_rules(-films.actors)`
+- To avoid this we have to specify where to stop by using `serialize_rules(-films.actors)`
 
 ```python
 {

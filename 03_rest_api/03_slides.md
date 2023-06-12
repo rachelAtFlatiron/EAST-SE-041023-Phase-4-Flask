@@ -71,27 +71,3 @@ api.add_resource(MyModel, '/my-model')
 
 - If so you will have to use the default way
 
----
-
-## Getting JSON from the request
-
-- It all depends on the content type passed into the request
-
----
-
-- `request.form`: key/value pairs in the HTML POST form that isn't JSON encoded
-- `request.form['key']` if key definitely exists
-- `request.form.get('key')` if key may not exist
-
----
-
-- `request.values`: multipurpose for args and form, especially if they overlap
-
----
-
-- ➡️ `request.get_json()`: parse json data ⬅️
-
----
-
-- `request.args`: key value pairs in the URL query string
-<img src='https://static.semrush.com/blog/uploads/media/00/6e/006eebc38b54220916caecfc80fed202/Guide-to-URL-Parameters-2.png' width="500px">

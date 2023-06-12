@@ -7,16 +7,16 @@
 - Specify requirements and structure of incoming and outgoing data
 
 
-| Lecture | Notes | Videos | Starter | Solution |
-| ------- | :---: | ------ | ------- | -------- |
-| 1. Intro To Flask | [Notes](https://docs.google.com/document/d/1w8sYq3sZDyl79ukfz2ALCFyOD6dpGVoTWfZa0V--dU0/edit?usp=sharing) | Video | Starter | Solution |
-| 2. Flask Routes | Notes | Video | Starter | Solution |
-| 3. Rest APIs with Flask | Notes | Video | Starter | Solution | 
-| 4. Exceptions and Validations  | Notes | Video | Starter | Solution |
-| 5. Client Server Communication  | Notes | Video | Starter | Solution |
-| 6. Auth pt1  | Notes | Video | Starter | Solution |
-| 7. Auth pt2  | Notes | Video | Starter | Solution |
-| 8. Deployment  | Notes | Video | Starter | Solution |
+| Lecture | Videos | Starter | Solution |
+| ------- | ------ | ------- | -------- |
+| 1. Intro To Flask | Video | Starter | Solution |
+| 2. Flask Routes | Video | Starter | Solution |
+| 3. Rest APIs with Flask | Video | Starter | Solution | 
+| 4. Exceptions and Validations  | Video | Starter | Solution |
+| 5. Client Server Communication  | Video | Starter | Solution |
+| 6. Auth pt1  | Video | Starter | Solution |
+| 7. Auth pt2  | Video | Starter | Solution |
+| 8. Deployment  | Video | Starter | Solution |
 
 ***
 
