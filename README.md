@@ -60,10 +60,10 @@
 
 <br />
 
-### 7. Create a `/longest-movies` route to retrieve the first 5 longest movies
+### 7. Create a `/longest-movies` route to retrieve the longest movie
 #### 7a. Import `jsonify` and `make_response`
 #### 7b. Use the `route()` decorator
-#### 7c. Query for the top 5 longest movies
+#### 7c. Query for the longest movie
 #### 7d. Jsonify and return the response
 
 <br />

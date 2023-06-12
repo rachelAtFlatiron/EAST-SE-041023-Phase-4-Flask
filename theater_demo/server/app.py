@@ -46,17 +46,15 @@ def index():
 # 7b. Use the `route` decorator
 @app.route('/longest-movies')
 def get_longest_movies():
-    # 7c. Query for the top 5 longest movies
-    prods = Production.query.order_by(Production.length.desc()).limit(5)
-    prods_list = []
+    # 7c. Query for longest movie
+    q = Production.query.order_by(Production.length.desc()).limit(1)
     # 7d. Jsonify and return the response
-    for p in prods:
-        prods_list.append({
-            "title": p.title,
-            "genre": p.genre,
-            "length": p.length
-        })
-    return make_response(jsonify(prods_list), 200)
+    prod = {
+        "title": q[0].title,
+        "genre": q[0].genre,
+        "length": q[0].length
+    }
+    return make_response(jsonify(prod), 200)
 
 # 8. Create a dynamic route
 # 8a. Use the route decorator
