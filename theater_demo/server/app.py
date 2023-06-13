@@ -2,7 +2,7 @@
 
 from flask import Flask, jsonify, make_response, request
 from flask_migrate import Migrate 
-from models import db, Production #has to be different from route method
+from models import db, Production, Role #has to be different from route method
 
 
 app = Flask(__name__)
@@ -100,6 +100,14 @@ def One_Production(id):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 5. Serializers: navigate back to models.py 
+
+@app.route('/roles', methods=["GET"])
+def Roles():
+    if(request.method == "GET"):
+        q = Role.query.all()
+        roles_list = [r.to_dict() for r in q]
+        res = make_response(roles_list, 200)
+        return res
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

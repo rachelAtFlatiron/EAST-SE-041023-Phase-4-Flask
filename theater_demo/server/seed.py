@@ -4,7 +4,7 @@
 # 7d. Migrate and seed database
 # 7e. Check /productions route
 from app import app
-from models import Production, db
+from models import Production, Role, db
 
 with app.app_context():
     Production.query.delete()
@@ -59,35 +59,35 @@ with app.app_context():
     db.session.commit()
 
 
-    # margot = Role(
-    #     role_name='Margot',
-    #     production=menu
-    # )
-    # chef = Role(
-    #     role_name='Chef Slowik',
-    #     production=menu
-    # )
-    # evelyn = Role(
-    #     role_name='Evelyn Quan Wang',
-    #     production=everything
-    # )
-    # monsieur = Role(
-    #     role_name='Monsieur Gustave H.',
-    #     production=budapest
-    # )
-    # deputy = Role(
-    #     role_name="Deputy Vilmos Kovacs",
-    #     production=budapest
-    # )
-    # aleta = Role(
-    #     role_name='Aleta Ogord',
-    #     production=guardians
-    # )
-    # gamora = Role(
-    #     role_name='gamora',
-    #     production=guardians
-    # )
+    margot = Role(
+        role_name='Margot',
+        production=menu
+    )
+    chef = Role(
+        role_name='Chef Slowik',
+        production=menu
+    )
+    evelyn = Role(
+        role_name='Evelyn Quan Wang',
+        production=everything
+    )
+    monsieur = Role(
+        role_name='Monsieur Gustave H.',
+        production=budapest
+    )
+    deputy = Role(
+        role_name="Deputy Vilmos Kovacs",
+        production=budapest
+    )
+    aleta = Role(
+        role_name='Aleta Ogord',
+        production=guardians
+    )
+    gamora = Role(
+        role_name='gamora',
+        production=guardians
+    )
 
-    # roles = [gamora, aleta, deputy, monsieur, evelyn, chef, margot]
-    # db.session.add_all(roles)
-    # db.session.commit()
+    roles = [gamora, aleta, deputy, monsieur, evelyn, chef, margot]
+    db.session.add_all(roles)
+    db.session.commit()
