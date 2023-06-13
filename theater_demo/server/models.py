@@ -20,8 +20,9 @@ class Production(db.Model, SerializerMixin):
     description = db.Column(db.String())
     composer = db.Column(db.String)
 
-    roles = db.relationship('Role', back_populates='production')
-    actors = association_proxy('roles', 'actor')
+    #all of the roles for the current production
+    production_roles = db.relationship('Role', back_populates='production')
+    actors = association_proxy('production_roles', 'actor')
     
     # 1c. update the serializers for all three classes
     serialize_rules = ('-created_at', '-updated_at')
@@ -42,8 +43,9 @@ class Actor(db.Model, SerializerMixin):
     age = db.Column(db.Integer)
     country = db.Column(db.String)
 
-    roles = db.relationship('Role', back_populates='actor')
-    productions = association_proxy('roles', 'production')
+    #all of the roles that belong to current actor
+    actor_roles = db.relationship('Role', back_populates='actor')
+    productions = association_proxy('actor_roles', 'production')
 
     # 1c. update the serializers for all three classes
     serialize_rules = ('-created_at', '-updated_at')
@@ -59,13 +61,14 @@ class Role(db.Model, SerializerMixin):
 
     role_name = db.Column(db.String)
     
+    #a role has one production
     production_id = db.Column(db.Integer, db.ForeignKey('productions.id'))
-    production = db.relationship('Production', back_populates='roles')
+    production = db.relationship('Production', back_populates='production_roles')
 
+    #a role has one actor
     actor_id = db.Column(db.Integer, db.ForeignKey('actors.id'))
-    actor = db.relationship('Actor', back_populates='roles')
+    actor = db.relationship('Actor', back_populates='actor_roles')
 
     # 1c. update the serializers for all three classes
-    serialize_rules = ('-created_at', '-updated_at')
-
+    serialize_rules = ('-created_at', '-updated_at', '-actor.actor_roles', '-production.production_roles')
 

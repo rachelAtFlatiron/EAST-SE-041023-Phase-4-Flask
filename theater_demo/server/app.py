@@ -4,6 +4,7 @@ from flask import Flask, jsonify, make_response, request, abort
 from flask_migrate import Migrate 
 from models import db, Production, Role, Actor
 # 2a. import Api, Resource
+from flask_restful import Api, Resource
 
 
 app = Flask(__name__)
@@ -13,6 +14,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 migrate = Migrate(app, db)
 
 # 2b. create Api instance
+api = Api(app)
 
 db.init_app(app)
 
@@ -63,12 +65,23 @@ def One_Production(id):
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 3a. create resource for roles
+class Roles(Resource):
     # 3b. create view method for all roles
+    def get(self):
+        q = Role.query.all()
+        role_dict = [r.to_dict() for r in q]
         # 3c. add rules to .to_dict()
+        return make_response(role_dict, 200)
     
     #4a. create POST view method
-    
+    def post(self):
+        data = request.get_json()
+        role = Role(role_name = data.get('role_name'), production_id=data.get('production_id'), actor_id=data.get('actor_id'))
+        db.session.add(role)
+        db.session.commit()
+        return make_response(role.to_dict(), 201)
 # 3d. create api endpoint for Roles 
+api.add_resource(Roles, '/roles')
 
 # 5a. create resource for SHOW and DELETE
     # 5b. create SHOW view method
@@ -83,8 +96,14 @@ def One_Production(id):
 # 5d. create an API endpoint for One_Role
 
 # ~~~~~~~~~~~~~~~YOU DO~~~~~~~~~~~~~~~~~~~~
-class Actors():
-    pass
+class Actors(Resource):
+    def get(self):
+        q = Actor.query.all()
+        actor_dict = [a.to_dict() for a in q]
+
+        return make_response(actor_dict, 200)
+
+api.add_resource(Actors, '/actors')
 
 class One_Actor():
     pass
