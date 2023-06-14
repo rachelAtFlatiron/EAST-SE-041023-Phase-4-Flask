@@ -83,17 +83,42 @@ class Roles(Resource):
 # 3d. create api endpoint for Roles 
 api.add_resource(Roles, '/roles')
 
+class One_Role(Resource):
 # 5a. create resource for SHOW and DELETE
     # 5b. create SHOW view method
+    def get(self, id):
+
+        q = Role.query.filter_by(id=id).first()
+        #raise error
+        if not q:
+            return make_response({"error": "not found"}, 404)
+        return make_response(q.to_dict(), 200)
     # 5c. create DELETE view method
+    def delete(self, id):
+        #.delete() does not honor cascading deletes
+        #Role.query.filter_by(id=id).first().delete() 
+        q = Role.query.filter_by(id=id).first()
+        db.session.delete(q)
+        db.session.commit()
+        return make_response({}, 204)
 
     # 6. Create a PATCH view method
+    def patch(self, id):
         # 6a. get matching query
+        role = Role.query.filter_by(id=id).first()
         # 6b. iterate over attributes from request
+        data = request.get_json()
         # 6c. update available attributes from request
+        for attr in data:
+            #update role[attr] with data.get(attr)
+            setattr(role, attr, data.get(attr))
         # 6d. add, commit to database
+        db.session.add(role)
+        db.session.commit()
+        return make_response(role.to_dict(), 200)
     
 # 5d. create an API endpoint for One_Role
+api.add_resource(One_Role, '/roles/<int:id>')
 
 # ~~~~~~~~~~~~~~~YOU DO~~~~~~~~~~~~~~~~~~~~
 class Actors(Resource):
@@ -102,11 +127,42 @@ class Actors(Resource):
         actor_dict = [a.to_dict() for a in q]
 
         return make_response(actor_dict, 200)
+    
+    def post(self):
+        data = request.get_json()
+        new_actor = Actor(name=data.get('name'), country=data.get('country'), age=data.get('age'), image=data.get('image'))
+        db.session.add(new_actor)
+        db.session.commit()
+        res_dict = new_actor.to_dict()
+        response = make_response(res_dict, 201)
+        return response
 
 api.add_resource(Actors, '/actors')
 
-class One_Actor():
-    pass
+class One_Actor(Resource):
+    def get(self, id):
+        q = Actor.query.filter_by(id=id).first()
+        if not q:
+            return make_response({"error": "not found"}, 404)
+        return make_response(q.to_dict(), 200)
+    
+    def patch(self, id):
+        data = request.get_json()
+        actor = Actor.query.filter_by(id=id).first()
+        for attr in data: 
+            setattr(actor, attr, data.get(attr))
+        db.session.add(actor)
+        db.session.commit()
+
+        return make_response(actor.to_dict(), 200)
+
+    def delete(self, id):
+        actor = Actor.query.filter_by(id=id).first()
+        db.session.delete(actor)
+        db.session.commit()
+        return make_response({}, 204)
+
+api.add_resource(One_Actor, '/actors/<int:id>')
 #~~~~~~~~~~~~~~~~~~~~~~~~~~END YOU DO~~~~~~~~~~~~~~~~~~~~~~~
 
 if __name__ == '__main__':

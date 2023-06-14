@@ -48,7 +48,7 @@ class Actor(db.Model, SerializerMixin):
     productions = association_proxy('actor_roles', 'production')
 
     # 1c. update the serializers for all three classes
-    serialize_rules = ('-created_at', '-updated_at')
+    serialize_rules = ('-created_at', '-updated_at', '-actor_roles.actor', '-actor_roles.production')
         
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
