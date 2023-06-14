@@ -14,6 +14,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False 
 
 # 🛑 render_as_batch=True prevents 'Constraint must have a name' on flask db migrate
+# 🛑 the above will go in /migrations/env.py
 migrate = Migrate(app, db)
 
 api = Api(app)
