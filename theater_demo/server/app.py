@@ -6,8 +6,14 @@ from models import db, Production, Role, Actor
 from flask_restful import Api, Resource
 # 7a. import NotFound from werkzeug.exceptions and abort from Flask
 # 10a. import UnprocessableEntity
+from werkzeug.exceptions import NotFound, UnprocessableEntity
 
-
+'''
+    Models:
+        @validates, constraints
+    App:
+        abort, raise HTTPException, @app.errorhandler
+'''
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
@@ -39,6 +45,8 @@ def Productions():
     if(request.method=="GET"):
         # 7b. if not found, raise NotFound exception
         q = Production.query.all()
+        if not q:
+            raise NotFound
         prod_list = [p.to_dict() for p in q]
         res = make_response(jsonify(prod_list), 200)
         return res 
@@ -59,6 +67,8 @@ def One_Production(id):
     if(request.method == 'GET'):
         q = Production.query.filter_by(id=id).first()
         # 7b. raise NotFound exception
+        if not q:
+            raise NotFound('no production found')
         prod_dict = q.to_dict()
         res = make_response(jsonify(prod_dict), 200)
         return res
@@ -76,15 +86,20 @@ class Roles(Resource):
     def get(self):
         q = Role.query.all()
         # 7c. If not found, use abort
+        if not q: 
+            abort(404, "Roles not found")
         role_dict = [r.to_dict(only=('id', 'role_name', 'actor.name', 'production.title')) for r in q]
         return make_response(role_dict, 200)
     
     def post(self):
         data = request.get_json()
         # 10b. add unprocessable entity
-        role = Role(role_name=data.get('role_name'), production_id=data.get('production_id'))
-        db.session.add(role)
-        db.session.commit()
+        try:
+            role = Role(role_name=data.get('role_name'), production_id=data.get('production_id'))
+            db.session.add(role)
+            db.session.commit()
+        except Exception:
+            raise UnprocessableEntity('invalid role')
         return make_response(role.to_dict(), 201)
     
 api.add_resource(Roles, '/roles', '/test')
@@ -96,6 +111,8 @@ class One_Role(Resource):
     def get(self, id):
         q = Role.query.filter_by(id=id).first()
         # 7c. If not found, use abort
+        if not q: 
+            abort(404, "The role was not found")
         return make_response(q.to_dict(), 200)
     
     def delete(self, id):
@@ -108,11 +125,13 @@ class One_Role(Resource):
         q = Role.query.filter_by(id=id).first()
         data = request.get_json()
         # 10b. raise unprocessable entity
-        for attr in data:
-            setattr(q, attr, data.get(attr))
-        db.session.add(q)
-        db.session.commit()
-
+        try:
+            for attr in data:
+                setattr(q, attr, data.get(attr))
+            db.session.add(q)
+            db.session.commit()
+        except Exception:
+            raise UnprocessableEntity("unprocessable entity")
         return make_response(q.to_dict(), 200)
     
 api.add_resource(One_Role, '/roles/<int:id>')
@@ -154,17 +173,25 @@ class One_Actor(Resource):
         q = Actor.query.filter_by(id=id).first()
         data = request.get_json()
         # 10b. raise Unprocessable Entity
-        for attr in data:
-            setattr(q, attr, data.get(attr))
-        db.session.add(q)
-        db.session.commit()
+        try:
+            for attr in data:
+                setattr(q, attr, data.get(attr))
+            db.session.add(q)
+            db.session.commit()
+        except Exception:
+            abort(422, 'bad data')
         return make_response(q.to_dict(), 200)
 api.add_resource(One_Actor, '/actors/<int:id>')
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# 🛑 you still ned raise() and abort() so view method can exit gracefully
 #7d. create fallback with app.handler
+@app.errorhandler(NotFound) 
+def handle_not_found(e):
+    response = make_response(
+        "Resource not found", 404 
+    )
+    return response
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
