@@ -16,23 +16,25 @@ title: '04_exceptions_validations'
 
 ```python
 # in models.py
-@validates('age') # uses the @validations decorator
-    def validate_age(self, key, age):
-        if(age < 0 or age > 200):
-            raise ValueError('age must be greater than 0 and less than 200')
-        else:
-            return age
+class Model:
+    ...
+    @validates('age', 'year') # uses the @validations decorator
+        def validate_age(self, key, age):
+            if(age < 0 or age > 200):
+                raise ValueError('age must be greater than 0 and less than 200')
+            else:
+                return age
 ```
 
 ---
 
 ## Constraints 
 
-- Constraints are handled at the SQL level
+- Constraints are handled at the table level
 - It will be triggered both in Flask shell and directly in SQL
 
 ```python
-name = db.Column(db.String, nullable=False, unique=True)
+name = db.Column(db.String, nullable=False, unique=True, db.CheckConstraint(...))
 ```
 
 ---
@@ -41,12 +43,20 @@ name = db.Column(db.String, nullable=False, unique=True)
 
 
 ```python
-from werkzeug.exceptions import NotFound
 
-@app.errorhandler(NotFound)
+# use decorator to register custom error handler
+@app.errorhandler(404)
 def some_error_handler(e):
     # additional logic
     return make_response({"message": ""}, <status code>)
+
+@app.route('/')
+def index():
+    try:
+        #logic
+    except Exception:
+        abort(404)
+
 ```
 
 ---
@@ -61,7 +71,12 @@ from werkzeug.exceptions import BadRequest
 
 # description overrides default message
 # you can raise a werkzeug exception directly in your classes
-raise BadRequest(description=None)
+@app.route('/')
+def index():
+    try:
+        #logic
+    except Exception:
+        raise BadRequest(description=None)
 ```
 
 ---
@@ -79,7 +94,10 @@ def hello():
 ```
 
 <aside class="notes">
-`raiseException("Error")` - this is a python thing that can be used in any python code...not just flask stuff
+`raiseException("Error")` - this is a python thing that can be used in any python code...not just flask stuff <br />
+abort raises HTTPException - same as raising an exception.  <br />
+using make_response is not handled the same way <br />
+error handling mechanism: looks for closest error handler that matches raised exception
 </aside>
 
 ---
