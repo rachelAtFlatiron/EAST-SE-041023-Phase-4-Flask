@@ -15,7 +15,17 @@ function App() {
 	const [actors, setActors] = useState([]);
 
 	// 3a. create a useEffect to fetch from /productions and /actors
+	useEffect(() => {
 		// 3b. save the result in state
+		fetch('/productions')
+		.then(res => res.json())
+		.then(data => setProductions(data))
+
+		fetch('/actors')
+		.then(res => res.json())
+		.then(data => setActors(data))
+	}, [])
+		
 
 
 	const addProduction = (production) =>

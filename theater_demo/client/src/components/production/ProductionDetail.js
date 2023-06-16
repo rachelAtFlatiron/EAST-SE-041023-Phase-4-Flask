@@ -5,11 +5,21 @@ function ProductionDetail() {
 	const [production, setProduction] = useState({
 		roles: []
 	});
-
+	const params = useParams()
+	const navigate = useNavigate()
 	// 4a. fetch current production based on params
-			// 4a. save production in state
+	useEffect(() => {
+		// 4a. save production in state
+		fetch(`/productions/${params.id}`)
+		.then(res => {
 			// 4c. if response is not ok, navigate to /not-found
-
+			if(res.ok){
+				res.json().then(data => setProduction(data))
+			} else {
+				navigate('/not-found')
+			}
+		})
+	}, [])
 
 	// 4b. destructure the values and display them on page
 	const { id, title, genre, image, description, director, length, composer } = production;

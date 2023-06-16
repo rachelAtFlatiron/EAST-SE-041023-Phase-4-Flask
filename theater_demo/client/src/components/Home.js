@@ -3,7 +3,14 @@ import ProductionCard from "./production/ProductionCard";
 
 function Home() {
 	// 2a. create state for the longest movies
+	const [longest, setLongest] = useState([])
+
 	// 2b. use useEffect to fetch /longest-movies and update state
+	useEffect(() => {
+		fetch('/longest-movies')
+		.then(res => res.json())
+		.then(data => setLongest(data))
+	}, [])
 
 	return (
 		<div>
@@ -17,7 +24,7 @@ function Home() {
 					justifyContent: "center",
 				}}
 			>
-				{[].map((el) => (
+				{longest.map((el) => (
 					<section style={{ display: "flex", flexDirection: "column" }}>
 						<h3>{el.length} minutes</h3>
 

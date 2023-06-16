@@ -12,6 +12,7 @@ flask-cors = "*"
 flask-migrate = "*"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
+ipdb = "*"
 
 [dev-packages]
 

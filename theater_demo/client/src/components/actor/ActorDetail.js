@@ -7,8 +7,21 @@ function ActorDetail() {
 	});
 
 	// 4a. fetch current actor based on params
-			// 4a. save actor data in state
+	const params = useParams() //params.id
+	const navigate = useNavigate()
+	// 4a. save actor data in state
+	useEffect(() => {
+		fetch(`/actors/${params.id}`).then((res) => {
 			// 4c. if response is not ok, navigate to /not-found
+			if(res.ok){
+				res.json().then(data => setActor(data))
+			} else {
+				//navigate come from react-router
+				//so we know that this is a front-end route
+				navigate('/not-found')
+			}
+		})
+	}, [])
 
 	// 4b. destructure the values and display them on page
 	const { id, name, age, country, image } = actor;

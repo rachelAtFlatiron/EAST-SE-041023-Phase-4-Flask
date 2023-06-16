@@ -45,8 +45,9 @@ def Productions():
     
     if(request.method=="POST"):
         data = request.get_json()
-        try:
-            prod = Production(title=data.get('title'), genre=data.get('genre'), length=data.get('length'), year=data.get('year'), image=data.get('image'), language=data.get('language'), director=data.get('director'), description=data.get('description'), composer=data.get('composer') )
+        try: 
+            title = data.get('title')
+            prod = Production(title=title.lower(), genre=data.get('genre'), length=data.get('length'), year=data.get('year'), image=data.get('image'), language=data.get('language'), director=data.get('director'), description=data.get('description'), composer=data.get('composer') )
             db.session.add(prod)
             db.session.commit()
         except Exception:
@@ -180,6 +181,9 @@ def handle_not_found(e):
         404
     )
     return response
+# @app.before_request
+# def before():
+#     import ipdb; ipdb.set_trace();
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
