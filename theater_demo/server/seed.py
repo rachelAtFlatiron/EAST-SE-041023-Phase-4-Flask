@@ -1,6 +1,5 @@
 from app import app
 from models import db, Production, Role, Actor
-from faker import Faker
 
 # application context - gives us access to context and data within the application we are working on as it is running
 # need to use with_context to use seeds

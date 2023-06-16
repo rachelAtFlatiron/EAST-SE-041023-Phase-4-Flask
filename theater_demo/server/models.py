@@ -24,7 +24,7 @@ class Production(db.Model, SerializerMixin):
     roles = db.relationship('Role', back_populates='production')
     actors = association_proxy('roles', 'actor')
     
-    serialize_rules = ('-created_at', '-updated_at', '-roles.production', '-actors.productions')
+    serialize_rules = ('-created_at', '-updated_at', '-roles.production', '-roles.actors', '-actors.productions')
 
 
     @validates('image')
@@ -87,6 +87,6 @@ class Role(db.Model, SerializerMixin):
     actor_id = db.Column(db.Integer, db.ForeignKey('actors.id'), nullable=False) 
     actor = db.relationship('Actor', back_populates='roles')
 
-    serialize_rules = ('-created_at', '-updated_at', '-production.roles', '-actors.roles')
+    serialize_rules = ('-created_at', '-updated_at', '-production.roles', '-actor.roles')
 
 

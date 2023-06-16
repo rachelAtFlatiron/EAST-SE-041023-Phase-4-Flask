@@ -27,6 +27,12 @@ db.init_app(app)
 def index():
     return '<h1>Hello World!</h1>'
 
+@app.route('/longest-movies')
+def get_longest_movies():
+    prods = Production.query.order_by(Production.length.desc()).limit(5)
+    prods_list = [prod.to_dict() for prod in prods]
+    return make_response(prods_list, 200)
+
 @app.route('/productions', methods=["GET", "POST"])
 def Productions():
     if(request.method=="GET"):
