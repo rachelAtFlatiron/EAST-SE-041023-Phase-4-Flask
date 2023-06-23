@@ -8,7 +8,7 @@ title: '05_auth_one'
 
 ---
 
-Authentication: verifying identity
+Authentication: verifying identity <br />
 Authorization: Users' access rights
 
 ---
@@ -20,20 +20,23 @@ Authorization: Users' access rights
 - ex. tracking ad information, keeping user logged in, seeing how many articles you've read on some site
 - you can see cookies created in developer tools
 
----
-
-## Cookies Are Sus
+<aside class="notes">
 - best for things not important to user security
-- susceptible to...
+</aside>
 
 ---
 
 ## Sessions
 
 - stores user information ON THE SERVER SIDE
-- information is encrypted and will be stored, in browser, encrypted
+- information is encrypted
 - info is only ever unencrypted on server side 
 - Note: `db.session()` (opening up ability to add info to database) is different than browser sessions (place to store info about user, etc.)
+
+<aside class="notes">
+The read-only sessionStorage property accesses a session Storage object for the current origin. sessionStorage is similar to localStorage; the difference is that while data in localStorage doesn't expire, data in sessionStorage is cleared when the page session ends.<br />
+sessionStorage only stored for current session (deleted after closing browser), cookies can persist
+</aside>
 
 ---
 
