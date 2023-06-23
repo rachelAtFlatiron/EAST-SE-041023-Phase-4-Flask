@@ -4,6 +4,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates 
 # 1d. import bcrypt from app.py
+from app import bcrypt
 
 db = SQLAlchemy()
 
@@ -104,15 +105,27 @@ class User(db.Model, SerializerMixin):
     name = db.Column(db.String)
     username = db.Column(db.String)
     # 2a. add a _password_hash column
+    _password_hash = db.Column(db.String)
     # 2b. add an admin column
+    # admin = db.Column(db.String, default=False)
 
     serialize_rules = ('-created_at', '-updated_at')
 
     # 3. create a hybrid property password_hash
+    # it protects the column from being directly viewed
+    @hybrid_property 
+    def password_hash(self):
+        return self._password_hash
     
     # 4a. Create the password setter so that it takes self and a password
+    @password_hash.setter 
+    def password_hash(self, password): 
         # 4b. Use bcyrpt to generate the password hash with bcrypt.generate_password_hash
+        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
         # 4c. Set the _password_hash to the hashed password  
+        self._password_hash = password_hash.decode('utf-8')
 
     # 5. create a method to authenticate a hash and pass in self and password
+    def authenticate(self, password):
         # 5b. use `bcrypt`'s `check_password_hash` to verify the password against the hash in the DB with  
+        return bcrypt.check_password_hash(self._password_hash, password)

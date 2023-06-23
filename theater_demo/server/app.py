@@ -3,20 +3,19 @@
 from flask import Flask, jsonify, make_response, request, abort, session
 from flask_migrate import Migrate 
 # 1b. import bcrypt
+from flask_bcrypt import Bcrypt
 from flask_restful import Api, Resource
 from werkzeug.exceptions import NotFound, UnprocessableEntity, Unauthorized
 
 app = Flask(__name__)
 # 1c. pass app to bcrypt
-# 🛑 we call bcrypt before models in order to avoid a circular import
-# 🛑 circular import: when two or more modules mutually depend on each other
-# 🛑 want to be done setting up app before importing anything from models
-
-
-from models import db, Production, Role, Actor, User
+bcrypt = Bcrypt(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False 
 app.secret_key = b'jV9\xed\x13G\xd2"\xcaZd\xafQ\xc68u'
+
+from models import db, Production, Role, Actor, User
+
 migrate = Migrate(app, db)
 db.init_app(app)
 api = Api(app)

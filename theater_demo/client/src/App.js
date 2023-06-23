@@ -46,6 +46,7 @@ function App() {
 	const addProduction = (production) =>
 		setProductions((current) => [...current, production]);
 	
+	// here is what we render if there is no user
 	if (!user){
 		return (
 			<div className="App light">
