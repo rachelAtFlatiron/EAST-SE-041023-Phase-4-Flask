@@ -9,28 +9,54 @@ function Auth({ updateUser }) {
 	const toggleSignup = () => setSignup((prev) => !prev);
 
     // 3a. create a validations schema using yup
+	const formSchema = yup.object().shape({
+		name: yup.string(),
+		username: yup.string().required("Please enter username")
+	})
     // 3b. create a formik instance containing...
-        // 3b. initial values
+	const formik = useFormik({
+		// 3b. initial values
+		initialValues: {
+			username: '',
+			name: ''
+		},
         // 3b. validation schema
+		validationSchema: formSchema,
         // 3b. onSubmit callback
-
-                // 4c. pass result to updateUser to set state  
-                // 4d. redirect to homepage if login is successful
-    
+		onSubmit: (values, actions) => {
+			fetch(signup ? '/users' : '/login', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json'
+				},
+				body: JSON.stringify(values)
+			})
+			.then(res => res.json())
+			.then(data => {
+				actions.resetForm()
+				// 4c. pass result to updateUser to set state  
+				updateUser(data)
+            	// 4d. redirect to homepage if login is successful
+				navigate('/')
+			})
+            
+		}
+	})
+        
 	return (
 		<section>
 			{signup ? (
-				<form className="form" >
+				<form className="form" onSubmit={formik.handleSubmit}>
 					<label>Name</label>
-					<input type="text" name='name' />
+					<input value={formik.values.name} onChange={formik.handleChange} type="text" name='name' />
 					<label>Username</label>
-					<input type="text" name='username' />
+					<input value={formik.values.username} onChange={formik.handleChange} type="text" name='username' />
 					<input type="submit" value="Sign Up" className="button" />
 				</form>
 			) : (
-				<form className="form" >
+				<form className="form" onSubmit={formik.handleSubmit} >
 					<label>Username</label>
-					<input type="text" name='username' />
+					<input value={formik.values.username} onChange={formik.handleChange} type="text" name='username' />
 					<input type="submit" value="Log In" className="button" />
 				</form>
 			)}

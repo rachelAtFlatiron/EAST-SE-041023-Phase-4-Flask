@@ -10,11 +10,13 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False 
 
-# 2c. create secret key
 
 migrate = Migrate(app, db)
 
 api = Api(app)
+
+# 2c. create secret key
+app.secret_key = b'\xe1\x93\xd1\xee*a>\xdc&F\x12B\xfc\x81Ha'
 
 db.init_app(app)
 
@@ -28,42 +30,86 @@ def get_longest_movies():
     prods_list = [prod.to_dict() for prod in prods]
     return make_response(prods_list, 200)
 
+@app.before_request
+def check_session():
+    print(f' before request {session} ')
+
+
+
+@app.after_request
+def check_session_two(response):
+    print(f'after request {session}')
+    return response
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # 1a. put some cookies in inspector of browser
 # 1a. create a GET route for dark-mode
-
-    # 1c. import ipdb; ipdb.set_trace()
-    # 1d. send a response with cookies info
+# @app.route('/dark-mode', methods=["GET"])
+# def mode():
+#     # 1c. import ipdb; ipdb.set_trace()
+#     mode = request.cookies['mode']
+#     # 1d. send a response with cookies info
+#     return make_response(mode, 200)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # 2a. create post method to create a new user
-
+class Users(Resource):
+    def post(self):
         # 2b. import session from flask
         # 2c. generate secret key
         # 2d. save the user_id to session hash
-
+        data = request.get_json()
+        user = User(name=data.get('name'), username=data.get('username'))
+        db.session.add(user)
+        db.session.commit()
+        #SESSION HERE IS DIFFERENT FROM DB.SESSION
+        session['user_id'] = user.id
+        #import ipdb; ipdb.set_trace()
+        return make_response(user.to_dict(), 201)
+    
 # 2e. add resource to route `/users`
+api.add_resource(Users, '/users')
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # 5a. create /logout route and set session['user_id'] to None 
+@app.route('/logout', methods=["GET"])
+def logout():
+    session['user_id'] = None
     # 5b. return empty response
+    return make_response('', 204)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # 8a. create route `/authorized-session`
+@app.route('/authorized-session', methods=["GET"])
+def authorize():
     # 8b. query for user by `user_id` stored in `session`
+    user = User.query.filter_by(id=session.get('user_id')).first()
     # 8c. if user exists, send user info as response, otherwise `abort` with `401 Unauthorized`
-
+    if user:
+        return make_response(user.to_dict(), 200)
+    abort(401, "Unauthorized")
+    #return make_response({"errors": "unauthorized"}, 401)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # 10a. create a /login resource with a method
-        # 10b. get username from request
-        # 10c. if user exists, save id to session and return user
-        # 10d. if user does not exist, raise an error            
+#post because I need to get information from request
+@app.route('/login', methods=["POST"])
+def login():
+    # 10b. get username from request
+    username = request.get_json().get('username')
+    # 10c. if user exists, save id to session and return user
+    user = User.query.filter_by(username = username).first()
+    if user:
+        session['user_id'] = user.id 
+        return make_response(user.to_dict(), 200)
+    # 10d. if user does not exist, raise an error   
+    else:
+        abort(401, "Unauthorized")
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -31,7 +31,7 @@ python -c 'import os; print(os.urandom(16))'
 ```
 #### - save secret key with 
 ```js 
-api.secret_key = <secret_key>
+app.secret_key = <secret_key>
 ```
 #### 2d. In the `POST` request save the user id to the session hash (NOT `db.session`)
 #### 2e. Add `User` resource to the route `/users`
