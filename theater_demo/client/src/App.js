@@ -11,6 +11,49 @@ import ProductionForm from "./components/production/ProductionForm";
 import ProductionDetail from "./components/production/ProductionDetail";
 import Auth from "./components/Auth";
 
+/*
+authorization:
+component mounts -> 
+run useEffect -> 
+getUser -> 
+make fetch /authorized session ->
+if user found, update user state
+*/
+
+/*
+sign up:
+onSubmit formik form ->
+POST /users ->
+enter into database ->
+hash password (bcrypt.generate_password_hash) -> 
+update sessions ->
+return user to React -> 
+update user state
+*/
+
+/*
+login:
+onSubmit formik form (which is also sign up's form) ->
+POST /login ->
+query database for user -> 
+if found -> 
+check if password is correct (bcrypt.check_password_hash()) -> 
+update sessions -> 
+return user to React ->
+update user state
+*/
+
+/*
+logout:
+on button click -> 
+fetch /logout ->
+clear sessions ->
+send back empty response to React ->
+set user state to null
+*/
+
+
+
 function App() {
 	const [productions, setProductions] = useState([]);
 	const [actors, setActors] = useState([]);

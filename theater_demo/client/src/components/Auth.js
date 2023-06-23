@@ -63,6 +63,11 @@ function Auth({ updateUser }) {
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
 					/>
+					{/* formik.touched is enabled with onBlur */}
+					{/* 
+						1. onBlur events - toggles formik.touched
+						2. conditional: if formik.touched and formik.errors 
+					*/}
 					{formik.touched.username && formik.errors.username ? (
 						<h3>{formik.errors.username}</h3>
 					) : (

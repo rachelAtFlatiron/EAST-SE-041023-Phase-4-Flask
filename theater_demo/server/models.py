@@ -3,10 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates 
-# 1d. import bcrypt from app.py
-from app import bcrypt
 
-db = SQLAlchemy()
+from config import db, bcrypt
 
 class Production(db.Model, SerializerMixin):
     __tablename__ = "productions"
@@ -109,7 +107,7 @@ class User(db.Model, SerializerMixin):
     # 2b. add an admin column
     # admin = db.Column(db.String, default=False)
 
-    serialize_rules = ('-created_at', '-updated_at')
+    serialize_rules = ('-created_at', '-updated_at', '-_password_hash')
 
     # 3. create a hybrid property password_hash
     # it protects the column from being directly viewed

@@ -7,18 +7,8 @@ from flask_bcrypt import Bcrypt
 from flask_restful import Api, Resource
 from werkzeug.exceptions import NotFound, UnprocessableEntity, Unauthorized
 
-app = Flask(__name__)
-# 1c. pass app to bcrypt
-bcrypt = Bcrypt(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False 
-app.secret_key = b'jV9\xed\x13G\xd2"\xcaZd\xafQ\xc68u'
-
-from models import db, Production, Role, Actor, User
-
-migrate = Migrate(app, db)
-db.init_app(app)
-api = Api(app)
+from config import app, db, api
+from models import Production, Role, Actor, User
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -58,16 +48,35 @@ def authorize():
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # 6a. create signup resource
+class Signup(Resource):
+    def post(self):
+        data = request.get_json()
+        new_user = User(name=data.get('name'), username=data.get('username'))
         # 6b. hash the given password and save it to _password_hash
+        new_user.password_hash = data.get('password')
+        # db.session add and commit
+        db.session.add(new_user)
+        db.session.commit()
         # 6c. save the user_id in session
+        session['user_id'] = new_user.id
+        #return response
+        return make_response(new_user.to_dict(rules=('-_password_hash', )), 201)
+api.add_resource(Signup, '/signup')
 
 class Login(Resource):
     def post(self):
-        pass
+        try:
         # 7a. check if user exists
-        # 7b. check if password is authentic
-            # 7c. set session's user id
-        # 7d. send error 
+            data = request.get_json()
+            user = User.query.filter_by(username=data.get('username')).first()
+            # 7b. check if password is authentic
+            if user.authenticate(data.get('password')):
+                # 7c. set session's user id
+                session['user_id'] = user.id 
+                return make_response(user.to_dict(), 200)
+        except:
+            # 7d. send error 
+            abort(401, "Unauthorized")
 
 api.add_resource(Login, '/login')            
 
