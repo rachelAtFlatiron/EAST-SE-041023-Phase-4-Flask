@@ -3,8 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates 
-# 1d. import bcrypt from app.py
+# 1d. import db from config.py
+# 2d. import bcrypt from config.py
 
+# 1b. move db setup to config.py
 db = SQLAlchemy()
 
 class Production(db.Model, SerializerMixin):
@@ -103,16 +105,16 @@ class User(db.Model, SerializerMixin):
 
     name = db.Column(db.String)
     username = db.Column(db.String)
-    # 2a. add a _password_hash column
-    # 2b. add an admin column
+    # 3a. add a _password_hash column
+    # 3b. add an admin column
 
     serialize_rules = ('-created_at', '-updated_at')
 
-    # 3. create a hybrid property password_hash
+    # 4. create a hybrid property password_hash
     
-    # 4a. Create the password setter so that it takes self and a password
-        # 4b. Use bcyrpt to generate the password hash with bcrypt.generate_password_hash
-        # 4c. Set the _password_hash to the hashed password  
+    # 5a. Create the password setter so that it takes self and a password
+        # 5b. Use bcyrpt to generate the password hash with bcrypt.generate_password_hash
+        # 5c. Set the _password_hash to the hashed password  
 
-    # 5. create a method to authenticate a hash and pass in self and password
-        # 5b. use `bcrypt`'s `check_password_hash` to verify the password against the hash in the DB with  
+    # 6. create a method to authenticate a hash and pass in self and password
+        # 6b. use `bcrypt`'s `check_password_hash` to verify the password against the hash in the DB with  

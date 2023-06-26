@@ -5,7 +5,7 @@ import * as yup from "yup";
 
 function Auth({ updateUser }) {
 	const [signup, setSignup] = useState(true);
-	// 8a. create state error
+	// 9a. create state error
 
 	const navigate = useNavigate();
 	const toggleSignup = () => setSignup((prev) => !prev);
@@ -37,7 +37,7 @@ function Auth({ updateUser }) {
 						navigate("/");
 					});
 				} else {
-					// 8b. set error message
+					// 9b. set error message
 				}
 			});
 		},
@@ -83,7 +83,7 @@ function Auth({ updateUser }) {
 						""
 					)}
 					<input type="submit" value="Sign Up" className="button" />
-					{/* 8c. use conditional rendering to display the error to user */}
+					{/* 9c. use conditional rendering to display the error to user */}
 				</form>
 			) : (
 				<form className="form" onSubmit={formik.handleSubmit}>
@@ -116,7 +116,7 @@ function Auth({ updateUser }) {
 						""
 					)}
 					<input type="submit" value="Log In" className="button" />
-					{/* 8c. use conditional rendering to display the error to user */}
+					{/* 9c. use conditional rendering to display the error to user */}
 				</form>
 			)}
 			<section>
