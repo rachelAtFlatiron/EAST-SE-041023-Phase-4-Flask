@@ -7,3 +7,5 @@ formik.md
 ./*/server/instance
 ./*/server/migrations
 ./*/server/Pipfile.lock
+/*/node_modules
+/*/*/node_modules
